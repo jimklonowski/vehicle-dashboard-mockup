@@ -1,0 +1,64 @@
+.panel {
+  @extend .card;
+  @include box-shadow(0 0 4px 0 rgba(0, 0, 0, 0.04));
+  border-width: 0;
+
+  .panel-header {
+    @extend .bg-white, .text-muted, .py-3, .mx-4, .border-0, .d-flex;
+    @include font-size(0.875rem);
+
+    span {
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px dotted #ccc;
+    }
+
+    .panel-menu {
+      @extend .dropdown, .ml-auto, .align-items-center;
+
+      a.dropdown-toggle {
+        @extend .btn;
+        padding: 0 0.5rem;
+        cursor: pointer;
+        color: rgba(0, 0, 0, 0.5);
+
+        &::after {
+          display: none;
+        }
+      }
+      svg.fa-ellipsis-v {
+        @extend .text-muted;
+      }
+    }
+  }
+
+  .panel-body {
+    @extend .card-body, .p-0;
+
+    table {
+      @extend .table, .table-sm, .table-striped, .table-hover;
+      @include font-size(0.875rem);
+      border-top: hidden;
+
+      td:first-child,
+      th:first-child {
+        padding-left: 1.5rem;
+      }
+      td:last-child,
+      th:last-child {
+        padding-right: 1.5rem;
+      }
+
+      thead {
+        font-family: $font-stack;
+        border-bottom: 2px solid #ddd;
+        color: rgba(0, 0, 0, 0.5);
+        @include font-size(0.825rem);
+      }
+      tbody {
+        font-family: $data-font-stack;
+      }
+    }
+  }
+}

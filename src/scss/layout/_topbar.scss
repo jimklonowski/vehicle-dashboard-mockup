@@ -1,0 +1,49 @@
+#TopBar {
+  @extend .navbar,
+    .navbar-dark,
+    .text-light,
+    .navbar-expand,
+    .shadow-sm,
+    .flex-row;
+  //position: sticky;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1500;
+  background: #3f474e !important;
+  height: $topbar-height;
+  padding-left: 0;
+  transition: padding-left $sidebar-transition;
+  .active & {
+    //padding-left: $sidebar-width;
+  }
+
+  button#sidebarCollapse {
+    outline: none !important;
+
+    .hamburger-box {
+      vertical-align: middle;
+      transform: scale(0.75);
+    }
+    .hamburger-label {
+      padding-left: 0.5rem;
+      vertical-align: middle;
+    }
+  }
+}
+
+// #TopNav {
+//   @extend .navbar,
+//     .navbar-expand-lg,
+//     .navbar-light,
+//     .bg-light,
+//     .border,
+//     .flex-column,
+//     .flex-md-row;
+
+//   button#sidebarCollapse {
+//     outline: none !important;
+//   }
+// }

@@ -1,0 +1,33 @@
+// 1. Configuration and Helpers
+@import "abstracts/variables";
+//@import "abstracts/functions";
+//@import "abstracts/mixins";
+
+// 2. Vendors
+@import "vendors/bootstrap";
+@import "vendors/hamburgers";
+
+// 3. Base stuff
+//@import "base/reset";
+@import "base/fonts";
+//@import "base/helpers";
+
+// 4. Layout-related sections
+@import "layout/altbar";
+@import "layout/sidebar";
+@import "layout/topbar";
+@import "layout/main";
+@import "layout/footer";
+//@import "layout/header";
+//@import "layout/footer";
+
+// 5. Components
+@import "components/tile";
+@import "components/panel";
+//@import "components/critical-alert";
+
+// 6. Page-Specific styles
+@import "pages/vehicle-dashboard";
+
+// 7. Themes
+//@import "themes/default";

@@ -1,0 +1,13 @@
+#AltBar {
+  @extend .bg-white, .shadow-sm;
+  @include font-size(0.9rem);
+  position: sticky;
+  top: $topbar-height;
+  padding-left: 0;
+  z-index: 1300;
+  transition: padding-left $sidebar-transition;
+
+  .active & {
+    //padding-left: $sidebar-width;
+  }
+}

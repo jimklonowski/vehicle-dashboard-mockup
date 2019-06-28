@@ -1,0 +1,37 @@
+.tile {
+  @extend .card, .p-3;
+
+  font-family: "Roboto Condensed", sans-serif;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  margin: 5px 0;
+  border-left: 4px solid $emkay-orange;
+
+  .tile-dataviz {
+    width: 85px;
+    min-height: 45px;
+    padding: 5px 0;
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .tile-info {
+    display: table-cell;
+    text-align: right;
+
+    .tile-title {
+      @extend .text-muted;
+      font-size: 1rem;
+      line-height: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tile-subtitle {
+      font-size: 1.75rem;
+      font-weight: 300;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+#BottomNav {
+  @extend .pt-4, .mt-3, .container;
+  @include font-size(0.875rem);
+  font-family: $font-stack;
+
+  div.row {
+    @extend .text-center, .pb-4;
+  }
+}

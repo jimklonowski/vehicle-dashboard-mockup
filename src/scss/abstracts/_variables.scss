@@ -1,0 +1,46 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+// Custom Variables
+$emkay-purple: #4f286c;
+$emkay-orange: #f68820;
+$emkay-bg: #eee;
+$text-color: #4a4e69;
+//$text-color: #2b2b2b;
+$font-stack: "Lato", sans-serif;
+$data-font-stack: "Roboto Condensed", sans-serif;
+$emkay-font-stack: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+
+$topbar-height: 60px;
+$altbar-height: 40px;
+$overlay-z-index: 1398;
+$swal-z-index: $overlay-z-index + 1;
+$sidebar-z-index: 1500;
+$sidebar-header-height: $topbar-height;
+$sidebar-width: 250px;
+$sidebar-drawer-height: 40px;
+$sidebar-border-color: $text-color;
+$sidebar-transition-duration: 0.6s;
+$sidebar-transition-function: cubic-bezier(0.945, 0.02, 0.27, 0.665);
+$sidebar-transition: $sidebar-transition-duration $sidebar-transition-function;
+
+//----------Vendor Overrides----------//
+
+// Override Hamburgers Variables
+//$hamburger-layer-width: 1rem;
+//$hamburger-layer-height: 4px;
+$hamburger-layer-color: rgba(255, 255, 255, 0.8);
+$hamburger-types: (emphatic, arrowalt, collapse);
+
+// Override Bootstrap Variables
+$body-bg: $emkay-bg;
+$body-color: $text-color;
+
+$table-striped-order: even;
+
+$enable-responsive-font-sizes: true;
+$enable-shadows: true;
+$font-family-sans-serif: $font-stack;
+$primary: $emkay-purple;
+$warning: $emkay-orange;

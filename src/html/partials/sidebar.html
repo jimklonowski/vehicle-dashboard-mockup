@@ -1,0 +1,162 @@
+<!-- https://azouaoui-med.github.io/angular-pro-sidebar/demo/# -->
+<nav id="SideBar">
+  <header class="sidebar-header" id="EmkayLogo">
+    <img src="${require('../../assets/images/logosmall.png')}" alt="emkay" />
+    <span>EMKAY, Inc.</span>
+  </header>
+  <nav class="sidebar-content">
+    <div class="sidebar-profile">
+      <div class="profile-image">
+        <img
+          src="${require('../../assets/images/user.jpg')}"
+          alt="user"
+          class="img-thumbnail"
+          width="60px"
+        />
+      </div>
+      <div class="profile-info">
+        <span class="profile-name">Jim Klonowski</span>
+        <span style="font-size:12px;">Information Technology</span>
+        <span style="font-size:9px;"
+          ><i class="fas fa-circle fa-fw text-success"></i>Online</span
+        >
+      </div>
+    </div>
+    <div class="input-group sidebar-search">
+      <input type="text" class="form-control" placeholder="Search..." />
+      <div class="input-group-append">
+        <span class="input-group-text">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div>
+
+    <ul class="navbar-nav">
+      <li class="active">
+        <a
+          href="#homeSubMenu"
+          class="nav-link"
+          data-toggle="collapse"
+          aria-expanded="true"
+        >
+          <i class="fas fa-tachometer-alt mr-2"></i>Dashboards
+        </a>
+        <ul class="collapse show list-unstyled" id="homeSubMenu">
+          <li class="nav-item">
+            <a href="#" class="nav-link">Fleet Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Vehicle Dashboard</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a
+          href="#reportsSubMenu"
+          class="nav-link"
+          data-toggle="collapse"
+          aria-expanded="true"
+          ><i class="fas fa-file-invoice mr-2"></i>Reports</a
+        >
+        <ul class="collapse show list-unstyled" id="reportsSubMenu">
+          <li class="nav-item">
+            <a href="#" class="nav-link">My Reports</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Fleet Reports</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a
+          href="#orderingSubMenu"
+          class="nav-link"
+          data-toggle="collapse"
+          aria-expanded="true"
+          ><i class="fas fa-shipping-fast mr-2"></i>Ordering</a
+        >
+        <ul class="collapse show list-unstyled" id="orderingSubMenu">
+          <li class="nav-item">
+            <a href="#" class="nav-link">Order Vehicle</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Driver Ordering</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">My Selector</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#" class="nav-link"
+          ><i class="fas fa-exclamation-circle mr-2"></i>Critical Alerts
+          <span class="badge badge-pill badge-light float-right">5</span></a
+        >
+      </li>
+      <li>
+        <a href="#" class="nav-link"
+          ><i class="fas fa-toolbox mr-2"></i>Fleet Resources</a
+        >
+      </li>
+    </ul>
+  </nav>
+  <footer class="sidebar-footer">
+    <div class="sidebar-footer-item">
+      <a
+        href="#"
+        class="sidebar-drawer-item-toggle"
+        data-toggle="dropdown"
+        aria-expanded="false"
+        aria-haspopup="true"
+      >
+        <i class="fas fa-fw fa-bell"></i>
+        <span class="badge badge-pill badge-danger">5</span>
+      </a>
+      <div class="dropdown-menu bg-secondary text-center">
+        <h6 class="dropdown-header">Critical Alerts</h6>
+        <a class="dropdown-item" href="#">Alert 1</a>
+        <a class="dropdown-item" href="#">Alert 2</a>
+        <a class="dropdown-item" href="#">Alert 3</a>
+        <a class="dropdown-item" href="#">Alert 4</a>
+        <a class="dropdown-item" href="#">Alert 5</a>
+      </div>
+    </div>
+    <div class="sidebar-footer-item">
+      <a
+        href="#"
+        class="sidebar-drawer-item-toggle"
+        data-toggle="dropdown"
+        aria-expanded="false"
+        aria-haspopup="true"
+      >
+        <i class="fas fa-fw fa-comments"></i>
+        <span class="badge badge-pill badge-success text-light">1</span>
+      </a>
+      <div class="dropdown-menu bg-secondary">
+        <h6 class="dropdown-header">Fleet Messenger</h6>
+        <a class="dropdown-item" href="#">WOW COOL</a>
+      </div>
+    </div>
+    <div class="sidebar-footer-item dropup">
+      <a
+        href="#"
+        class="sidebar-drawer-item-toggle"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <i class="fas fa-fw fa-cog"></i>
+      </a>
+      <div class="dropdown-menu bg-secondary">
+        <h6 class="dropdown-header">Utilities</h6>
+        <a class="dropdown-item" href="#">Tools</a>
+        <a class="dropdown-item" href="#">Live Chat</a>
+      </div>
+    </div>
+    <div class="sidebar-footer-item">
+      <a href="#" id="logoff">
+        <i class="fas fa-fw fa-power-off"></i>
+      </a>
+    </div>
+  </footer>
+</nav>

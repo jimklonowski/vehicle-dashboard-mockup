@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="not ready for production" />
+    <title>NOT REAL /// Emkay, Inc.</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <!-- Sidebar Navigation -->
+      ${require("./partials/sidebar.html")}
+      <!-- Top Navigation Bar -->
+      ${require("./partials/topbar.html")}
+
+      <!-- Main Content Wrapper -->
+      <main class="content">
+        <!-- Secondary Navigation Bar -->
+        ${require("./partials/altbar.html")}
+        <div class="container">
+          <h1 class="jumbotron display-4 mt-3">
+            Vehicle Dashboard
+          </h1>
+
+          ${require("./partials/vehicle-dashboard.html")}
+        </div>
+      </main>
+      ${require("./partials/footer.html")}
+    </div>
+    <div class="overlay"></div>
+  </body>
+</html>

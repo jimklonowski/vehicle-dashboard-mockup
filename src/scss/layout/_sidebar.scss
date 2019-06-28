@@ -1,0 +1,212 @@
+#SideBar {
+  //background-color: lighten(#343a40, 15%);
+  @extend .navbar-dark, .bg-dark;
+  width: $sidebar-width;
+  height: 100%;
+  max-height: 100%;
+  position: fixed;
+  top: 0;
+  left: -$sidebar-width;
+  transition: left $sidebar-transition;
+  z-index: 1500;
+  //   background-image: url(../assets/images/whitebg.jpg);
+  //   background-size: cover;
+  //   background-position: center;
+  //   background-repeat: no-repeat;
+  //   &::before {
+  //     content: "";
+  //     position: absolute;
+  //     top: 0;
+  //     right: 0;
+  //     bottom: 0;
+  //     left: 0;
+  //     background-color: rgba(29, 29, 29, 0.8);
+  //   }
+
+  /* Animate the sidebar from offscreen if the wrapper has the .active class. */
+  .active & {
+    left: 0;
+  }
+
+  header,
+  .sidebar-header {
+    @extend .navbar-brand;
+    background: #3f474e;
+    text-align: center;
+    padding: 1rem;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    min-height: $sidebar-header-height;
+    max-height: $sidebar-header-height;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: $emkay-font-stack;
+
+    img {
+      float: left;
+      height: 20px;
+      margin: 5px;
+    }
+  }
+
+  .sidebar-content {
+    max-height: calc(
+      100% - #{$sidebar-drawer-height} - #{$sidebar-header-height}
+    );
+    height: calc(100% - #{$sidebar-drawer-height} - #{$sidebar-header-height});
+    overflow-y: scroll;
+    position: relative;
+    top: $sidebar-header-height;
+    box-shadow: 0 1px 5px #343a40;
+
+    .sidebar-profile {
+      @extend .p-3;
+      position: relative;
+      display: flex;
+
+      .profile-image {
+        float: left;
+        width: 60px;
+        padding: 2px;
+        border-radius: 12px;
+        margin-right: 15px;
+        overflow: hidden;
+      }
+      .profile-info {
+        @extend .text-muted;
+        max-width: 150px;
+        display: flex;
+        flex-direction: column;
+
+        .fa-circle {
+          margin-right: 4px;
+        }
+
+        span {
+          &.profile-name {
+            color: white;
+          }
+          white-space: nowrap;
+          width: inherit;
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-search {
+      @extend .input-group, .p-3;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      input[type="text"],
+      input[type="text"]:focus {
+        @extend .form-control;
+        color: #bdbdbd;
+        border: none;
+        outline: none;
+        background-color: lighten(#343a40, 15%);
+        box-shadow: none;
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.5);
+        }
+      }
+      .input-group-text {
+        color: #343a40;
+        background-color: lighten(#343a40, 15%);
+        border: none;
+        margin-left: 1px;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      &:hover {
+        border: 4px solid rgba(255, 255, 255, 0.25);
+      }
+    }
+
+    ul li a {
+      padding: 0.5rem 1rem;
+
+      &:hover {
+        background: lighten(#343a40, 10%);
+      }
+    }
+
+    ul li ul li a {
+      padding-left: 25px !important;
+    }
+  }
+
+  footer,
+  .sidebar-footer {
+    @extend .navbar-nav, .flex-row;
+    background-color: lighten(#343a40, 5%);
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -1px 5px #343a40;
+    height: $sidebar-drawer-height;
+
+    .sidebar-footer-item {
+      @extend .nav-item;
+      flex-grow: 1;
+      text-align: center;
+      position: static;
+      display: flex;
+
+      .sidebar-drawer-item-toggle {
+        &[aria-expanded="true"] {
+          background: #343a40;
+        }
+      }
+
+      .dropdown-menu {
+        @extend .mx-1, .my-0;
+        bottom: $sidebar-drawer-height;
+        left: 0 !important;
+        top: initial !important;
+        right: 0 !important;
+        -webkit-transform: none !important;
+        transform: none !important;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        //font-size: 0.9rem;
+
+        .dropdown-header {
+          @extend .text-light, .bg-dark, .text-uppercase;
+          @include font-size(0.75rem);
+          letter-spacing: 2px;
+        }
+
+        .dropdown-item {
+          @extend .px-2;
+          @include font-size(0.75rem);
+
+          &:hover {
+            background-color: darken($secondary, 10%);
+          }
+        }
+      }
+
+      a {
+        @extend .nav-link;
+        flex-grow: 1;
+
+        .badge {
+          position: absolute;
+          top: 2px;
+        }
+      }
+    }
+  }
+}

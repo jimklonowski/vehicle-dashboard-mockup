@@ -1,0 +1,20 @@
+dl.dashboard-list {
+  @extend .row; //, .bg-white, .rounded, .border, .shadow-sm, .p-3;
+  @include font-size(0.875rem);
+  dt,
+  dd {
+    @extend .col-6;
+    margin-bottom: 0;
+  }
+
+  dt {
+    text-align: right;
+  }
+  dd {
+    font-family: $data-font-stack;
+  }
+
+  dt::after {
+    content: ":";
+  }
+}
