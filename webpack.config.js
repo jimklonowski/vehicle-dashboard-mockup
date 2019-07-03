@@ -2,6 +2,7 @@
 const path = require("path");
 // Simplifies creation of HTML files (copy or generate from src to dist)
 const webpack = require("webpack");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // Extract CSS from bundle.js into its own file
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -14,8 +15,13 @@ const TerserJSPlugin = require("terser-webpack-plugin");
 module.exports = {
   // Entry point: From this file webpack will begin its work
   entry: "./src/js/index.js",
+  devServer: {
+    headers: {
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
   // Overriding default mode.  When set to production, webpack minifies and optimizes output
-  // mode: "development",
+  mode: "development",
   // Webpack loaders
   module: {
     rules: [
@@ -52,12 +58,23 @@ module.exports = {
           outputPath: "./assets"
         }
       }
+      // // Loader for JSON data
+      // {
+      //   test: /\.json$/,
+      //   loader: "json-loader"
+      // }
     ]
   },
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
   },
   plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, "src/assets/json/"),
+        to: path.resolve(__dirname, "dist/assets/json/")
+      }
+    ]),
     //new webpack.SourceMapDevToolPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
