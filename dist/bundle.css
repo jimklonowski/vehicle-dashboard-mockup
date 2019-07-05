@@ -25498,7 +25498,7 @@ a.text-dark:hover, a.text-dark:focus {
 .text-body {
   color: #4a4e69 !important; }
 
-.text-muted, #SideBar .sidebar-content .sidebar-profile .profile-info, .tile .tile-info .tile-title, .panel .panel-header, .panel .panel-header .panel-menu svg.fa-ellipsis-v {
+.text-muted, #SideBar .sidebar-content .sidebar-profile .profile-info, .tile .tile-info .tile-title, .panel .panel-header, .panel .panel-header .panel-menu svg.fa-ellipsis-v, .dataTables_info {
   color: #6c757d !important; }
 
 .text-black-50 {
@@ -26020,12 +26020,17 @@ h1.jumbotron {
   .panel .panel-body table {
     font-size: 0.875rem;
     border-top: hidden; }
+    .panel .panel-body table.dataTable thead > tr > th.sorting_asc,
+    .panel .panel-body table.dataTable thead > tr > th.sorting_desc {
+      padding-right: 30px !important; }
+    .panel .panel-body table.dataTable thead > tr > th {
+      padding: 0.75rem 1.5rem 0.75rem 0.25rem; }
     .panel .panel-body table td:first-child,
     .panel .panel-body table th:first-child {
-      padding-left: 1.5rem; }
+      padding-left: 1.5rem !important; }
     .panel .panel-body table td:last-child,
     .panel .panel-body table th:last-child {
-      padding-right: 1.5rem; }
+      padding-right: 1.5rem !important; }
     .panel .panel-body table thead {
       font-family: "Lato", sans-serif;
       border-bottom: 2px solid #ddd;
@@ -26033,6 +26038,20 @@ h1.jumbotron {
       font-size: 0.825rem; }
     .panel .panel-body table tbody {
       font-family: "Roboto Condensed", sans-serif; }
+
+.dataTables_info {
+  padding-top: 0 !important;
+  font-size: 0.875rem; }
+
+.dataTables_length,
+.dataTables_info {
+  font-size: 0.875rem;
+  text-align: left !important; }
+
+.dataTables_filter,
+.dataTables_paginate {
+  text-align: right !important;
+  font-size: 0.875rem; }
 
 dl.dashboard-list {
   font-size: 0.875rem; }

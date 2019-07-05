@@ -41,13 +41,22 @@
       @include font-size(0.875rem);
       border-top: hidden;
 
+      &.dataTable thead > tr > th.sorting_asc,
+      &.dataTable thead > tr > th.sorting_desc {
+        padding-right: 30px !important;
+      }
+
+      &.dataTable thead > tr > th {
+        padding: 0.75rem 1.5rem 0.75rem 0.25rem;
+      }
+
       td:first-child,
       th:first-child {
-        padding-left: 1.5rem;
+        padding-left: 1.5rem !important;
       }
       td:last-child,
       th:last-child {
-        padding-right: 1.5rem;
+        padding-right: 1.5rem !important;
       }
 
       thead {
@@ -61,4 +70,21 @@
       }
     }
   }
+}
+
+.dataTables_info {
+  @extend .text-muted;
+  padding-top: 0 !important;
+  @include font-size(0.875rem);
+}
+
+.dataTables_length,
+.dataTables_info {
+  @include font-size(0.875rem);
+  text-align: left !important;
+}
+.dataTables_filter,
+.dataTables_paginate {
+  text-align: right !important;
+  @include font-size(0.875rem);
 }

@@ -7,11 +7,13 @@ import "bootstrap";
 import "datatables.net";
 import "datatables.net-buttons";
 import "datatables.net-buttons-bs4";
+//import "datatables.net-responsive-bs4";
 import "datatables.net-buttons/js/dataTables.buttons";
 import "datatables.net-buttons/js/buttons.html5";
 import "datatables.net-buttons-bs4/js/buttons.bootstrap4";
 import "datatables.net-bs4/css/dataTables.bootstrap4.css";
 import "datatables.net-buttons-bs4/css/buttons.bootstrap4.css";
+//import "datatables.net-responsive-bs4/css/responsive.bootstrap4.css";
 
 // initialize counter animations
 import "./vehicle-dashboard/vehicle-dashboard";
@@ -50,7 +52,11 @@ import {
   faTimesCircle,
   faCheckCircle,
   faMapMarkerAlt,
-  faCamera
+  faCamera,
+  faFileInvoiceDollar,
+  faExclamationTriangle,
+  faAngry,
+  faParking
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -77,7 +83,11 @@ library.add(
   faTimesCircle,
   faCheckCircle,
   faMapMarkerAlt,
-  faCamera
+  faCamera,
+  faFileInvoiceDollar,
+  faExclamationTriangle,
+  faAngry,
+  faParking
 );
 
 dom.watch();

@@ -18,7 +18,8 @@ module.exports = {
   devServer: {
     headers: {
       "Access-Control-Allow-Origin": "*"
-    }
+    },
+    writeToDisk: true
   },
   // Overriding default mode.  When set to production, webpack minifies and optimizes output
   mode: "development",

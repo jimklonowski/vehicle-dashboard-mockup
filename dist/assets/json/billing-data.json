@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "invoice": "AA7668",
+      "bill_date": "2018-11",
+      "bill_for_date": "2018-11",
+      "description": "FMS",
+      "amount": "$10.59"
+    },
+    {
+      "invoice": "BB1234",
+      "bill_date": "2018-11",
+      "bill_for_date": "2018-10",
+      "description": "Rental",
+      "amount": "($69.99)"
+    },
+    {
+      "invoice": "CC6969",
+      "bill_date": "2018-11",
+      "bill_for_date": "2018-10",
+      "description": "Rental",
+      "amount": "($12.45)"
+    },
+    {
+      "invoice": "DD4201",
+      "bill_date": "2018-10",
+      "bill_for_date": "2018-09",
+      "description": "FMS",
+      "amount": "$341.84"
+    },
+    {
+      "invoice": "EE4321",
+      "bill_date": "2018-09",
+      "bill_for_date": "2018-09",
+      "description": "Rental",
+      "amount": "($62.28)"
+    }
+  ]
+}
