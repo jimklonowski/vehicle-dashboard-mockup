@@ -18180,12 +18180,13 @@ pre {
   margin-right: -15px;
   margin-left: -15px; }
 
-.no-gutters, .dashboard-section {
+.no-gutters, .dashboard-section, dl.dashboard-list {
   margin-right: 0;
   margin-left: 0; }
-  .no-gutters > .col, .dashboard-section > .col,
+  .no-gutters > .col, .dashboard-section > .col, dl.dashboard-list > .col,
   .no-gutters > [class*="col-"],
-  .dashboard-section > [class*="col-"] {
+  .dashboard-section > [class*="col-"],
+  dl.dashboard-list > [class*="col-"] {
     padding-right: 0;
     padding-left: 0; }
 

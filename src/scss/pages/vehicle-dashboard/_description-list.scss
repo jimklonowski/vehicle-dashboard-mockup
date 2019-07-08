@@ -1,5 +1,5 @@
 dl.dashboard-list {
-  @extend .row; //, .bg-white, .rounded, .border, .shadow-sm, .p-3;
+  @extend .row, .no-gutters; //, .bg-white, .rounded, .border, .shadow-sm, .p-3;
   @include font-size(0.875rem);
   dt,
   dd {

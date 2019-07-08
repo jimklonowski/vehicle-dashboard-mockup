@@ -1,5 +1,4 @@
 window.$ = window.jQuery = require("jquery");
-
 // Import bootstrap JS
 import "bootstrap";
 
@@ -15,7 +14,7 @@ import "datatables.net-bs4/css/dataTables.bootstrap4.css";
 import "datatables.net-buttons-bs4/css/buttons.bootstrap4.css";
 //import "datatables.net-responsive-bs4/css/responsive.bootstrap4.css";
 
-// initialize counter animations
+// initialize vehicle dashboard
 import "./vehicle-dashboard/vehicle-dashboard";
 
 // attach sweetalert handlers

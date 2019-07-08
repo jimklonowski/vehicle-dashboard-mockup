@@ -192,43 +192,43 @@
         </div>
       </div>
     </div>
-    <div class="panel-body row no-gutters">
+    <div class="panel-body row no-gutters" id="VehicleSummary">
       <dl class="dashboard-list col-md-6 col-lg-4">
         <dt>Account</dt>
-        <dd>EM102</dd>
+        <dd data-field="account"></dd>
         <dt>Billing Sort</dt>
-        <dd>-----</dd>
+        <dd data-field="billing-sort"></dd>
         <dt>VIN</dt>
-        <dd>1C4SDJET4KCXXX69</dd>
+        <dd class="vin"></dd>
         <dt>Year Make Model</dt>
-        <dd>2019 DODGE DURANGO</dd>
+        <dd data-field="ymm"></dd>
         <dt>Exterior Color</dt>
-        <dd>-----</dd>
+        <dd data-field="ext-color"></dd>
       </dl>
 
       <dl class="dashboard-list col-md-6 col-lg-4">
         <dt>Center</dt>
-        <dd>001</dd>
+        <dd data-field="center"></dd>
         <dt>Center Description</dt>
-        <dd>Executive</dd>
+        <dd data-field="center-description"></dd>
         <dt>Client Vehicle</dt>
-        <dd>123456</dd>
+        <dd data-field="client-vehicle-number"></dd>
         <dt>Status</dt>
-        <dd>ON BILLING</dd>
+        <dd data-field="status"></dd>
         <dt>Category</dt>
-        <dd>Sport Utility - Medium</dd>
+        <dd data-field="vehicle-classification"></dd>
       </dl>
       <dl class="dashboard-list col-md-6 col-lg-4">
         <dt>Department</dt>
-        <dd>I.T.</dd>
+        <dd data-field="department"></dd>
         <dt>Project</dt>
-        <dd></dd>
+        <dd data-field="project"></dd>
         <dt>Division</dt>
-        <dd></dd>
+        <dd data-field="division"></dd>
         <dt>Group</dt>
-        <dd></dd>
+        <dd data-field="group"></dd>
         <dt>Client Use</dt>
-        <dd></dd>
+        <dd data-field="client-use"></dd>
       </dl>
     </div>
   </div>
@@ -267,7 +267,7 @@
         </div>
       </div>
     </div>
-    <div class="panel-body row no-gutters">
+    <div class="panel-body row no-gutters" id="DriverSummary">
       <figure class="w-100 col-md-12 col-lg mb-3">
         <img src="assets/user.jpg" alt="user" class="d-block mx-auto" width="200px">
         <figcaption class="text-center text-muted">
@@ -279,39 +279,39 @@
       </figure>
       <dl class="dashboard-list col-md-6 col-lg-4">
         <dt>Last Name</dt>
-        <dd>GRIFFITH</dd>
+        <dd data-field="last-name"></dd>
         <dt>First Name</dt>
-        <dd>ANDREW</dd>
+        <dd data-field="first-name"></dd>
         <dt>Address Line 1</dt>
-        <dd>EMKAY, INC</dd>
+        <dd data-field="address-1"></dd>
         <dt>Address Line 2</dt>
-        <dd>805 W. THORNDALE AVE</dd>
+        <dd data-field="address-2"></dd>
         <dt>City/State/ZIP</dt>
-        <dd>Itasca, IL 60143</dd>
+        <dd data-field="city-state-zip"></dd>
         <dt>County</dt>
-        <dd>DUPAGE</dd>
+        <dd data-field="county"></dd>
         <dt>Phone</dt>
-        <dd>(630)250-7400</dd>
+        <dd data-field="phone"></dd>
         <dt>Cell</dt>
-        <dd>(630)788-7404</dd>
+        <dd data-field="cell"></dd>
         <dt>Fax</dt>
-        <dd></dd>
+        <dd data-field="fax"></dd>
       </dl>
       <dl class="dashboard-list col-md-6 col-lg-4">
         <dt>Email</dt>
-        <dd>agriffith@emkay.com</dd>
+        <dd data-field="email"></dd>
         <dt>Employee ID</dt>
-        <dd>123456</dd>
+        <dd data-field="employee-id"></dd>
         <dt>Driver Misc 1</dt>
-        <dd></dd>
+        <dd data-field="driver-misc-1"></dd>
         <dt>Driver Misc 2</dt>
-        <dd></dd>
+        <dd data-field="driver-misc-2"></dd>
         <dt>Driver Misc 3</dt>
-        <dd></dd>
+        <dd data-field="driver-misc-3"></dd>
         <dt>Driver Misc 4</dt>
-        <dd></dd>
+        <dd data-field="driver-misc-4"></dd>
         <dt>Selector Level</dt>
-        <dd></dd>
+        <dd data-field="selector-level"></dd>
       </dl>
     </div>
   </div>
@@ -320,15 +320,15 @@
 </section>
 <section class="row py-4">
   <!-- <header class="col-12 text-muted">FUEL</header> -->
-<div class="col-xl-3 col-md-6" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="150">
+<div class="col-xl-3 col-md-6">
   <div class="tile" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="150">
     <div class="tile-dataviz">
-      <i class="fas fa-gas-pump fa-fw fa-3x"></i>
+      <i class="fas fa-battery-three-quarters fa-fw fa-3x"></i>
     </div>
     <div class="tile-info">
-      <div class="tile-title">Total Gallons</div>
-      <div class="tile-subtitle countmeup" id="gallonCounter" data-countup-start-val="0" data-countup-decimal-places="2" data-countup-duration="1" data-countup-end-val="983.20">
-        983.20
+      <div class="tile-title">Current MPG</div>
+      <div class="tile-subtitle countmeup" id="mpgCounter" data-countup-start-val="0" data-countup-decimal-places="2" data-countup-duration="1" data-countup-end-val="18.36">
+        18.36
       </div>
     </div>
   </div>
@@ -336,12 +336,12 @@
 <div class="col-xl-3 col-md-6">
   <div class="tile" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="300">
     <div class="tile-dataviz">
-      <i class="fas fa-battery-three-quarters fa-fw fa-3x"></i>
+      <i class="fas fa-tachometer-alt fa-fw fa-3x"></i>
     </div>
     <div class="tile-info">
-      <div class="tile-title">Current MPG</div>
-      <div class="tile-subtitle countmeup" id="mpgCounter" data-countup-start-val="0" data-countup-decimal-places="2" data-countup-duration="1.5" data-countup-end-val="18.36">
-        18.36
+      <div class="tile-title">Current Odometer</div>
+      <div class="tile-subtitle countmeup" id="odometerCounter" data-countup-start-val="0" data-countup-decimal-places="0" data-countup-duration="1.5" data-countup-end-val="18118">
+        18,118
       </div>
     </div>
   </div>
@@ -349,12 +349,12 @@
 <div class="col-xl-3 col-md-6">
   <div class="tile" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="450">
     <div class="tile-dataviz">
-      <i class="fas fa-tachometer-alt fa-fw fa-3x"></i>
+      <i class="fas fa-gas-pump fa-fw fa-3x"></i>
     </div>
     <div class="tile-info">
-      <div class="tile-title">Current Odometer</div>
-      <div class="tile-subtitle countmeup" id="odometerCounter" data-countup-start-val="0" data-countup-decimal-places="0" data-countup-duration="2" data-countup-end-val="18118">
-        18,118
+      <div class="tile-title">Total Gallons</div>
+      <div class="tile-subtitle countmeup" id="gallonCounter" data-countup-start-val="0" data-countup-decimal-places="2" data-countup-duration="2" data-countup-end-val="983.20">
+        983.20
       </div>
     </div>
   </div>
@@ -484,8 +484,8 @@
         <thead>
           <th>Date/Time</th>
           <th>Vehicle Number</th>
-          <th>Description</th>
           <th>Location</th>
+          <th>Description</th>
           <th>Amount</th>
         </thead>
         <tbody></tbody>
@@ -691,35 +691,13 @@
     </div>
     <div class="panel-body">
       <div class="table-responsive">
-        <table class="table">
+        <table class="table" id="InspectionSummary" style="width:100%;">
           <thead>
             <th>Date</th>
             <th>Comments</th>
-            <th>View</th>
+            <th>Report</th>
           </thead>
-          <tbody>
-            <tr>
-              <td>04/19/2017</td>
-              <td>Attached is my April inspection report</td>
-              <td>
-                <a href="#!" class="text-decoration-none"><i class="fas fa-fw fa-camera"></i></a>
-              </td>
-            </tr>
-            <tr>
-              <td>02/21/2017</td>
-              <td>original test date Android</td>
-              <td>
-                <a href="#!" class="text-decoration-none"><i class="fas fa-fw fa-camera"></i></a>
-              </td>
-            </tr>
-            <tr>
-              <td>04/19/2017</td>
-              <td>Test orig dates</td>
-              <td>
-                <a href="#!" class="text-decoration-none"><i class="fas fa-fw fa-camera"></i></a>
-              </td>
-            </tr>
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
     </div>
