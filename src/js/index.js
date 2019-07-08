@@ -21,9 +21,9 @@ import "./vehicle-dashboard/vehicle-dashboard";
 import "./util/util";
 
 // Import what we need from KendoUI
-import "@progress/kendo-ui/js/kendo.dataviz.gauge";
-import "@progress/kendo-ui/css/web/kendo.common.css";
-import "@progress/kendo-ui/css/web/kendo.default.css";
+// import "@progress/kendo-ui/js/kendo.dataviz.gauge";
+// import "@progress/kendo-ui/css/web/kendo.common.css";
+// import "@progress/kendo-ui/css/web/kendo.default.css";
 
 // Import FontAwesome
 import { library, dom } from "@fortawesome/fontawesome-svg-core";

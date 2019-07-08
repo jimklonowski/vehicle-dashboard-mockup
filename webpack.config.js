@@ -2,7 +2,11 @@
 const path = require("path");
 // Simplifies creation of HTML files (copy or generate from src to dist)
 const webpack = require("webpack");
+// Clean /dist folder before build
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+// Copy static assets to /dist
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+// Assemble html from partials
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // Extract CSS from bundle.js into its own file
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -70,6 +74,7 @@ module.exports = {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, "src/assets/json/"),
