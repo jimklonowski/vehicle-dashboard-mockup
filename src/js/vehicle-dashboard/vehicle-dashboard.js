@@ -9,142 +9,105 @@ import "aos/dist/aos.css";
 // Date/Time formatting/sorting
 var moment = require("moment");
 
-function vehicleDetail() {
-  // Insert vehicle detail from json into lists
+//prettier-ignore
+function populateVehicleDetail() {
+  // Insert vehicle detail from json into lists (change this to a get request URL)
   $.getJSON("./assets/json/vehicle-data.json").done(function(vehicle) {
     // 1st column
-    $("#VehicleSummary")
-      .find("[data-field='account']")
-      .text(vehicle.account);
-    $("#VehicleSummary")
-      .find("[data-field='billing-sort']")
-      .text(vehicle.billing_sort);
-    $("#VehicleSummary")
-      .find("[data-field='vin']")
-      .text(vehicle.vin);
-    $("#VehicleSummary")
-      .find("[data-field='ymm']")
-      .text(
-        `${vehicle.vehicle_year} ${vehicle.vehicle_make} ${
-          vehicle.vehicle_model
-        }`
-      );
-    $("#VehicleSummary")
-      .find("[data-field='ext-color']")
-      .text(vehicle.ext_color);
+    $("#VehicleSummary").find("[data-field='account']").text(vehicle.account);
+    $("#VehicleSummary").find("[data-field='billing-sort']").text(vehicle.billing_sort);
+    $("#VehicleSummary").find("[data-field='vin']").text(vehicle.vin);
+    $("#VehicleSummary").find("[data-field='ymm']").text(`${vehicle.vehicle_year} ${vehicle.vehicle_make} ${vehicle.vehicle_model}`);
+    $("#VehicleSummary").find("[data-field='ext-color']").text(vehicle.ext_color);
     // 2nd column
-    $("#VehicleSummary")
-      .find("[data-field='center']")
-      .text(vehicle.center);
-    $("#VehicleSummary")
-      .find("[data-field='center-description']")
-      .text(vehicle.center_description);
-    $("#VehicleSummary")
-      .find("[data-field='client-vehicle-number']")
-      .text(vehicle.client_vehicle_number);
-    $("#VehicleSummary")
-      .find("[data-field='status']")
-      .text(vehicle.vehicle_status);
-    $("#VehicleSummary")
-      .find("[data-field='vehicle-classification']")
-      .text(vehicle.vehicle_classification);
+    
+    $("#VehicleSummary").find("[data-field='center']").text(vehicle.center);
+    $("#VehicleSummary").find("[data-field='center-description']").text(vehicle.center_description);
+    $("#VehicleSummary").find("[data-field='client-vehicle-number']").text(vehicle.client_vehicle_number);
+    $("#VehicleSummary").find("[data-field='status']").text(vehicle.vehicle_status);
+    $("#VehicleSummary").find("[data-field='vehicle-classification']").text(vehicle.vehicle_classification);
+
     // 3rd column
-    $("#VehicleSummary")
-      .find("[data-field='department']")
-      .text(vehicle.department);
-    $("#VehicleSummary")
-      .find("[data-field='project']")
-      .text(vehicle.project);
-    $("#VehicleSummary")
-      .find("[data-field='division']")
-      .text(vehicle.division);
-    $("#VehicleSummary")
-      .find("[data-field='group']")
-      .text(vehicle.group);
-    $("#VehicleSummary")
-      .find("[data-field='client-use']")
-      .text(vehicle.client_use);
+    $("#VehicleSummary").find("[data-field='department']").text(vehicle.department);
+    $("#VehicleSummary").find("[data-field='project']").text(vehicle.project);
+    $("#VehicleSummary").find("[data-field='division']").text(vehicle.division);
+    $("#VehicleSummary").find("[data-field='group']").text(vehicle.group);
+    $("#VehicleSummary").find("[data-field='client-use']").text(vehicle.client_use);
   });
 }
 
-function driverDetail() {
+//prettier-ignore
+function populateDriverDetail() {
   // Insert vehicle detail from json into lists
   $.getJSON("./assets/json/driver-data.json").done(function(driver) {
     //debugger;
-    $("#DriverSummary")
-      .find("[data-field='last-name']")
-      .text(driver.last_name);
-    $("#DriverSummary")
-      .find("[data-field='first-name']")
-      .text(driver.first_name);
-    $("#DriverSummary")
-      .find("[data-field='address-1']")
-      .text(driver.address_1);
-    $("#DriverSummary")
-      .find("[data-field='address-2']")
-      .text(driver.address_2);
-    $("#DriverSummary")
-      .find("[data-field='city-state-zip']")
-      .text(`${driver.city}, ${driver.state} ${driver.zip}`);
-    $("#DriverSummary")
-      .find("[data-field='county']")
-      .text(driver.county);
-    $("#DriverSummary")
-      .find("[data-field='phone']")
-      .text(driver.phone);
-    $("#DriverSummary")
-      .find("[data-field='cell']")
-      .text(driver.cell);
-    $("#DriverSummary")
-      .find("[data-field='fax']")
-      .text(driver.fax);
+    $("#DriverSummary").find("[data-field='last-name']").text(driver.last_name);
+    $("#DriverSummary").find("[data-field='first-name']").text(driver.first_name);
+    $("#DriverSummary").find("[data-field='address-1']").text(driver.address_1);
+    $("#DriverSummary").find("[data-field='address-2']").text(driver.address_2);
+    $("#DriverSummary").find("[data-field='city-state-zip']").text(`${driver.city}, ${driver.state} ${driver.zip}`);
+    $("#DriverSummary").find("[data-field='county']").text(driver.county);
+    $("#DriverSummary").find("[data-field='phone']").text(driver.phone);
+    $("#DriverSummary").find("[data-field='cell']").text(driver.cell);
+    $("#DriverSummary").find("[data-field='fax']").text(driver.fax);
 
-    $("#DriverSummary")
-      .find("[data-field='email']")
-      .text(driver.email);
-    $("#DriverSummary")
-      .find("[data-field='employee-id']")
-      .text(driver.employee_id);
-    $("#DriverSummary")
-      .find("[data-field='driver-misc-1']")
-      .text(driver.driver_misc_1);
-    $("#DriverSummary")
-      .find("[data-field='driver-misc-2']")
-      .text(driver.driver_misc_2);
-    $("#DriverSummary")
-      .find("[data-field='driver-misc-3']")
-      .text(driver.driver_misc_3);
-    $("#DriverSummary")
-      .find("[data-field='driver-misc-4']")
-      .text(driver.driver_misc_4);
-    $("#DriverSummary")
-      .find("[data-field='selector-level']")
-      .text(driver.selector_level);
+    $("#DriverSummary").find("[data-field='email']").text(driver.email);
+    $("#DriverSummary").find("[data-field='employee-id']").text(driver.employee_id);
+    $("#DriverSummary").find("[data-field='driver-misc-1']").text(driver.driver_misc_1);
+    $("#DriverSummary").find("[data-field='driver-misc-2']").text(driver.driver_misc_2);
+    $("#DriverSummary").find("[data-field='driver-misc-3']").text(driver.driver_misc_3);
+    $("#DriverSummary").find("[data-field='driver-misc-4']").text(driver.driver_misc_4);
+    $("#DriverSummary").find("[data-field='selector-level']").text(driver.selector_level);
   });
 }
 
-// Fill fuel tiles
+// Generate Tiles using template fed by json
+function createTile(tileJSON) {
+  //prettier-ignore
+  let wrapper = $(
+    `<div class="${tileJSON.wrapperClasses}" data-aos="${tileJSON.wrapperAOS.aos}" data-aos-delay="${tileJSON.wrapperAOS.aosDelay}" data-aos-easing="${tileJSON.wrapperAOS.aosEasing}" data-aos-id="${tileJSON.wrapperAOS.aosId}"></div>`
+  );
+  //prettier-ignore
+  let tile = 
+  `<div class="tile tile-${tileJSON.color}">
+    <div class="tile-dataviz">
+      <i class="${tileJSON.iconClasses}"></i>
+    </div>
+    <div class="tile-text">
+      <div class="tile-title">${tileJSON.title}</div>
+      <div class="tile-subtitle countmeup" 
+        data-countup-start-val="${tileJSON.countup.start}"
+        data-countup-decimal-places="${tileJSON.countup.decimals}"
+        data-countup-delay="${tileJSON.countup.delay}"
+        data-countup-duration="${tileJSON.countup.duration}"
+        data-countup-prefix="${tileJSON.countup.prefix}"
+        data-countup-suffix="${tileJSON.countup.suffix}"
+        data-countup-end-val="${tileJSON.value}">
+        ${tileJSON.value}
+      </div>
+    </div>
+  </div>`;
+
+  wrapper.html(tile);
+
+  return wrapper;
+}
+
+// Create Fuel Tiles
 function fuelTiles() {
-  $(".countmeup").each(function(index) {
-    var $wrapper = $(this).closest(".tile");
+  $.getJSON("./assets/json/fuel-tile-data.json").done(function(response) {
+    $.each(response.data, function(index, tile) {
+      $("#FuelTiles").append(createTile(tile));
+    });
+  });
+}
 
-    var options = {};
-    var target = this;
-    var value = $(this).data("countup-end-val");
-    options.startVal = $(this).data("countup-start-val");
-    options.decimalPlaces = $(this).data("countup-decimal-places");
-    options.duration = $(this).data("countup-duration");
-    options.suffix = $(this).data("countup-suffix") || "";
-    options.prefix = $(this).data("countup-prefix") || "";
-    // for cleaner animations, we might want to delay the countup visual until the animate-on-scroll animation finishes
-    var delay = $(this).data("countup-delay") || 0;
-    var animation = new CountUp(target, value, options);
-    // start countup animation
-    setTimeout(() => animation.start(), delay);
-
-    target.addEventListener("click", function() {
-      animation.reset();
-      animation.start();
+// Create Vehicle Tiles
+function vehicleTiles() {
+  // Read vehicle-tile-json and create html
+  $.getJSON("./assets/json/vehicle-tile-data.json").done(function(response) {
+    $.each(response.data, function(index, tile) {
+      $("#VehicleTiles").append(createTile(tile));
     });
   });
 }
@@ -169,11 +132,7 @@ function fuelTable() {
       {
         data: "date",
         type: "date",
-        render: function(data) {
-          //console.log(data);
-          //var date = Date.parse(data);
-          return moment(data).format("L");
-        }
+        render: data => moment(data).format("L")
       },
       { data: "odometer" },
       { data: "driver" },
@@ -182,9 +141,8 @@ function fuelTable() {
         data: "merchant_address",
         className: "map-link",
         render: function(data) {
-          return `<a href='#!' data-url='https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
-            data
-          )}&key=${googleMapsAPI}'>${data} <i class="fas fa-fw fa-map-marker-alt"></i></a>`;
+          //prettier-ignore
+          return `<a href='#!' data-url='https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(data)}&key=${googleMapsAPI}'>${data} <i class="fas fa-fw fa-map-marker-alt"></i></a>`;
         }
       },
       {
@@ -250,11 +208,7 @@ function maintenanceTable() {
       {
         data: "date",
         type: "date",
-        render: function(data) {
-          //console.log(data);
-          //var date = Date.parse(data);
-          return moment(data).format("L");
-        }
+        render: data => moment(data).format("L")
       },
       { data: "odometer" },
       { data: "vendor" },
@@ -299,11 +253,7 @@ function tollTable() {
       {
         data: "date_time",
         type: "date",
-        render: function(data) {
-          //console.log(data);
-          //var date = Date.parse(data);
-          return moment(data).format("LLL");
-        }
+        render: data => moment(data).format("LLL")
       },
       { data: "vehicle_number" },
       {
@@ -311,9 +261,8 @@ function tollTable() {
         className: "map-link",
         render: function(data) {
           if (data) {
-            return `<a href='#!' data-url='https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
-              data
-            )}&key=${googleMapsAPI}'>${data} <i class="fas fa-fw fa-map-marker-alt"></i></a>`;
+            //prettier-ignore
+            return `<a href='#!' data-url='https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(data)}&key=${googleMapsAPI}'>${data} <i class="fas fa-fw fa-map-marker-alt"></i></a>`;
           }
         }
       },
@@ -370,11 +319,7 @@ function billingTable() {
       {
         data: "bill_date",
         type: "date",
-        render: function(data) {
-          //console.log(data);
-          //var date = Date.parse(data);
-          return moment(data).format("MMM YYYY");
-        }
+        render: data => moment(data).format("MMM YYYY")
       },
       {
         data: "description",
@@ -389,9 +334,8 @@ function billingTable() {
       { data: "amount" },
       {
         data: "invoice",
-        render: function(data) {
-          return `<a href="#!" title="Invoice Details" data-invoice="${data}" class='billing-invoice'>View <i class="fas fa-fw fa-file-invoice-dollar"></i></a>`;
-        }
+        render: data =>
+          `<a href="#!" title="Invoice Details" data-invoice="${data}" class='billing-invoice'>View <i class="fas fa-fw fa-file-invoice-dollar"></i></a>`
       }
     ],
     order: [[0, "desc"]],
@@ -563,20 +507,15 @@ function inspectionsTable() {
       {
         data: "date",
         type: "date",
-        render: function(data) {
-          //console.log(data);
-          //var date = Date.parse(data);
-          return moment(data).format("L");
-        }
+        render: data => moment(data).format("L")
       },
       {
         data: "comments"
       },
       {
         data: "inspection",
-        render: function(data) {
-          return `<a href='#!' class='inspection-report' data-inspection='${data}'>View&nbsp;<i class='fas fa-fw fa-camera'></i></a>`;
-        }
+        render: data =>
+          `<a href='#!' class='inspection-report' data-inspection='${data}'>View&nbsp;<i class='fas fa-fw fa-camera'></i></a>`
       }
     ],
     order: [[0, "desc"]],
@@ -588,16 +527,47 @@ function inspectionsTable() {
   });
 }
 
-// handle animations on this page
-document.addEventListener("DOMContentLoaded", function() {
-  // populate the description lists from json requests before beginning the animations from AOS
-  driverDetail();
-  vehicleDetail();
+// Animates counter tiles
+function bindCounterAnimations() {
+  document.addEventListener("aos:in:counterTile", ({ detail }) => {
+    let target = $(detail).find(".countmeup")[0];
+    let options = {};
+    let delay = $(target).data("countup-delay") || 0;
+    let value = $(target).data("countup-end-val");
 
+    options.startVal = $(target).data("countup-start-val");
+    options.decimalPlaces = $(target).data("countup-decimal-places");
+    options.duration = $(target).data("countup-duration");
+    options.prefix = $(target).data("countup-prefix") || "";
+    options.suffix = $(target).data("countup-suffix") || "";
+
+    let animation = new CountUp(target, value, options);
+
+    setTimeout(() => animation.start(), delay);
+
+    target.addEventListener("click", () => {
+      animation.reset();
+      animation.start();
+    });
+  });
+}
+
+// DOM is loaded
+document.addEventListener("DOMContentLoaded", function() {
+  // Bind CountUp animations on tiles after each aos fade-in event is triggered on an element with data-aos-id='counterTile'
+  bindCounterAnimations();
+
+  // populate the description lists from json requests before beginning the animations from AOS
+  populateVehicleDetail();
+  vehicleTiles();
+  populateDriverDetail();
+  fuelTiles();
+  // start the animate-on-scroll animations
   AOS.init({
     once: true
   });
-  fuelTiles();
+
+  // fill the tables
   fuelTable();
   maintenanceTable();
   tollTable();

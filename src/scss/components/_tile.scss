@@ -6,7 +6,7 @@
   table-layout: fixed;
   width: 100%;
   margin: 5px 0;
-  border-left: 4px solid $emkay-orange;
+  border-left: 4px solid $text-color;
 
   .tile-dataviz {
     width: 85px;
@@ -16,13 +16,13 @@
     vertical-align: middle;
   }
 
-  .tile-info {
+  .tile-text {
     display: table-cell;
     text-align: right;
 
     .tile-title {
       @extend .text-muted;
-      font-size: 1rem;
+      font-size: 0.9rem;
       line-height: 18px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -33,5 +33,11 @@
       font-size: 1.75rem;
       font-weight: 300;
     }
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .tile-#{$color} {
+    @include tile-variant($value);
   }
 }

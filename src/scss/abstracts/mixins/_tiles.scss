@@ -1,0 +1,4 @@
+// tile color variants
+@mixin tile-variant($bg) {
+  border-left-color: $bg;
+}

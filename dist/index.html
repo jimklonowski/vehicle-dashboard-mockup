@@ -145,23 +145,23 @@
         <!-- Secondary Navigation Bar -->
         <div id="AltBar">
   <nav class="nav nav-underline">
-    <a class="nav-link active" href="#">General</a>
-    <a class="nav-link" href="#">Expense Summary</a>
-    <a class="nav-link" href="#">Billing History</a>
-    <a class="nav-link" href="#">Maintenance</a>
-    <a class="nav-link" href="#">Fuel</a>
-    <a class="nav-link" href="#">Licensing</a>
-    <a class="nav-link" href="#">Accident</a>
-    <a class="nav-link" href="#">Rental History</a>
-    <a class="nav-link" href="#">Inspections</a>
-    <a class="nav-link" href="#">Drivers</a>
-    <a class="nav-link" href="#">Documents</a>
-    <a class="nav-link" href="#">Reported Odometers</a>
-    <a class="nav-link" href="#">Toll Transactions</a>
-    <a class="nav-link" href="#">Transport/Storage</a>
-    <a class="nav-link" href="#">Violations</a>
-    <a class="nav-link" href="#">eVoucher</a>
-    <a class="nav-link" href="#">SafeRoads</a>
+    <a class="nav-link active" href="#!">General</a>
+    <a class="nav-link" href="#!">Expense Summary</a>
+    <a class="nav-link" href="#!">Billing History</a>
+    <a class="nav-link" href="#!">Maintenance</a>
+    <a class="nav-link" href="#!">Fuel</a>
+    <a class="nav-link" href="#!">Licensing</a>
+    <a class="nav-link" href="#!">Accident</a>
+    <a class="nav-link" href="#!">Rental History</a>
+    <a class="nav-link" href="#!">Inspections</a>
+    <a class="nav-link" href="#!">Drivers</a>
+    <a class="nav-link" href="#!">Documents</a>
+    <a class="nav-link" href="#!">Reported Odometers</a>
+    <a class="nav-link" href="#!">Toll Transactions</a>
+    <a class="nav-link" href="#!">Transport/Storage</a>
+    <a class="nav-link" href="#!">Violations</a>
+    <a class="nav-link" href="#!">eVoucher</a>
+    <a class="nav-link" href="#!">SafeRoads</a>
   </nav>
 </div>
 
@@ -170,8 +170,8 @@
             Vehicle Dashboard
           </h1>
 
-          <section class="row">
-  <div class="col-xl-12" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="150">
+          <section class="row pb-4" data-aos="zoom-in-down" data-aos-easing="ease-in-cubic" data-aos-delay="0" data-aos-offset="0">
+  <div class="col-xl-12">
   <div class="panel">
     <div class="panel-header">
       <span>Vehicle Detail</span>
@@ -246,7 +246,10 @@
   </dl> -->
 </div>
 
-  <div class="col-xl-12 py-4" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="150">
+</section>
+<section id="VehicleTiles" class="row" style="min-height:100px;"></section>
+<section class="row" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="450" data-aos-offset="0">
+  <div class="col-xl-12 py-4">
   <div class="panel">
     <div class="panel-header">
       <span>Driver Detail</span>
@@ -318,65 +321,7 @@
 </div>
 
 </section>
-<section class="row py-4">
-  <!-- <header class="col-12 text-muted">FUEL</header> -->
-<div class="col-xl-3 col-md-6">
-  <div class="tile" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="150">
-    <div class="tile-dataviz">
-      <i class="fas fa-battery-three-quarters fa-fw fa-3x"></i>
-    </div>
-    <div class="tile-info">
-      <div class="tile-title">Current MPG</div>
-      <div class="tile-subtitle countmeup" id="mpgCounter" data-countup-start-val="0" data-countup-decimal-places="2" data-countup-duration="1" data-countup-end-val="18.36">
-        18.36
-      </div>
-    </div>
-  </div>
-</div>
-<div class="col-xl-3 col-md-6">
-  <div class="tile" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="300">
-    <div class="tile-dataviz">
-      <i class="fas fa-tachometer-alt fa-fw fa-3x"></i>
-    </div>
-    <div class="tile-info">
-      <div class="tile-title">Current Odometer</div>
-      <div class="tile-subtitle countmeup" id="odometerCounter" data-countup-start-val="0" data-countup-decimal-places="0" data-countup-duration="1.5" data-countup-end-val="18118">
-        18,118
-      </div>
-    </div>
-  </div>
-</div>
-<div class="col-xl-3 col-md-6">
-  <div class="tile" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="450">
-    <div class="tile-dataviz">
-      <i class="fas fa-gas-pump fa-fw fa-3x"></i>
-    </div>
-    <div class="tile-info">
-      <div class="tile-title">Total Gallons</div>
-      <div class="tile-subtitle countmeup" id="gallonCounter" data-countup-start-val="0" data-countup-decimal-places="2" data-countup-duration="2" data-countup-end-val="983.20">
-        983.20
-      </div>
-    </div>
-  </div>
-</div>
-<div class="col-xl-3 col-md-6">
-  <div class="tile" data-aos="fade-in" data-aos-easing="ease-in-cubic" data-aos-delay="600">
-    <div class="tile-dataviz">
-      <i class="fas fa-dollar-sign fa-fw fa-3x"></i>
-    </div>
-    <div class="tile-info">
-      <div class="tile-title">Total Cost</div>
-      <div class="tile-subtitle countmeup" id="fuelCostCounter" data-countup-start-val="0" data-countup-decimal-places="2" data-countup-duration="2.5" data-countup-prefix="$" data-countup-end-val="2527.85">
-        $2,527.85
-      </div>
-    </div>
-  </div>
-</div>
-<!-- <div class="col-12 my-2 text-right">
-  <a href="#" class="text-decoration-none">Fuel Purchase History &rarr;</a>
-</div> -->
-
-</section>
+<section id="FuelTiles" class="row" style="min-height:100px;"></section>
 <section class="row py-4">
   <div class="col-xl-12" data-aos="fade-up" data-aos-easing="ease-in-cubic" data-aos-delay="250">
   <div class="panel">

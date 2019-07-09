@@ -1,10 +1,23 @@
-<section class="row">
+<section
+  class="row pb-4"
+  data-aos="zoom-in-down"
+  data-aos-easing="ease-in-cubic"
+  data-aos-delay="0"
+  data-aos-offset="0"
+>
   ${require("./vehicle-dashboard/vehicle-summary.html")}
+</section>
+<section id="VehicleTiles" class="row" style="min-height:100px;"></section>
+<section
+  class="row"
+  data-aos="fade-in"
+  data-aos-easing="ease-in-cubic"
+  data-aos-delay="450"
+  data-aos-offset="0"
+>
   ${require("./vehicle-dashboard/driver-summary.html")}
 </section>
-<section class="row py-4">
-  ${require("./vehicle-dashboard/fuel-tiles.html")}
-</section>
+<section id="FuelTiles" class="row" style="min-height:100px;"></section>
 <section class="row py-4">
   ${require("./vehicle-dashboard/fuel-summary.html")}
 </section>
