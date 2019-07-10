@@ -1,0 +1,6 @@
+/**
+ * Prevent mis-handling of svg's clicked inside of buttons 
+ */
+button > * {
+  pointer-events: none;
+}

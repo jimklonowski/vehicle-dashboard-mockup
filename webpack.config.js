@@ -6,14 +6,16 @@ const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // Copy static assets to /dist
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+// Store, Hide, Expose, and Reference environment variables from .env file
+const DotEnvWebpackPlugin = require("dotenv-webpack");
 // Assemble html from partials
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // Extract CSS from bundle.js into its own file
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractWebpackPlugin = require("mini-css-extract-plugin");
 // Minimize CSS for production
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const OptimizeCSSAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
 // Minimize JS for production
-const TerserJSPlugin = require("terser-webpack-plugin");
+const TerserJSWebpackPlugin = require("terser-webpack-plugin");
 
 // configure webpack
 module.exports = {
@@ -34,7 +36,7 @@ module.exports = {
       {
         test: /\.(s*)css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          MiniCssExtractWebpackPlugin.loader,
           "css-loader",
           "postcss-loader",
           "sass-loader"
@@ -71,9 +73,13 @@ module.exports = {
     ]
   },
   optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
+    minimizer: [
+      new TerserJSWebpackPlugin({}),
+      new OptimizeCSSAssetsWebpackPlugin({})
+    ]
   },
   plugins: [
+    new DotEnvWebpackPlugin(),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       {
@@ -92,7 +98,7 @@ module.exports = {
       inject: "head",
       minify: true
     }),
-    new MiniCssExtractPlugin({
+    new MiniCssExtractWebpackPlugin({
       filename: "bundle.css"
     })
   ],

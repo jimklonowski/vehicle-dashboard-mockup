@@ -41,6 +41,11 @@
       @include font-size(0.875rem);
       border-top: hidden;
 
+      td,
+      th {
+        vertical-align: inherit;
+      }
+
       &.dataTable thead > tr > th.sorting_asc,
       &.dataTable thead > tr > th.sorting_desc {
         padding-right: 30px !important;

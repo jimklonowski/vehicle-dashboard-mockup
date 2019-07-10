@@ -1,0 +1,70 @@
+{
+  "data": [
+    {
+      "title": "Months in Service",
+      "value": "55",
+      "color": "warning",
+      "iconClasses": "fas fa-fw fa-3x fa-calendar-alt",
+      "countup": {
+        "start": "0",
+        "decimals": "0",
+        "delay": "0",
+        "duration": "1",
+        "end": "55",
+        "prefix": "",
+        "suffix": ""
+      },
+      "wrapperClasses": "col-lg-4",
+      "wrapperAOS": {
+        "aos": "fade-in",
+        "aosDelay": "150",
+        "aosEasing": "ease-in-cubic",
+        "aosId": "counterTile"
+      }
+    },
+    {
+      "title": "Average Monthly Miles",
+      "value": "1265.09",
+      "color": "warning",
+      "iconClasses": "fas fa-fw fa-3x fa-history",
+      "countup": {
+        "start": "0",
+        "decimals": "2",
+        "delay": "0",
+        "duration": "1.5",
+        "end": "1265.09",
+        "prefix": "",
+        "suffix": ""
+      },
+      "wrapperClasses": "col-lg-4",
+      "wrapperAOS": {
+        "aos": "fade-in",
+        "aosDelay": "300",
+        "aosEasing": "ease-in-cubic",
+        "aosId": "counterTile"
+      }
+    },
+    {
+      "title": "Total Cents Per Mile",
+      "value": "1.235",
+      "color": "warning",
+      "iconClasses": "fas fa-fw fa-3x fa-dollar-sign",
+      "countup": {
+        "start": "0",
+        "decimals": "3",
+        "delay": "0",
+        "duration": "2",
+        "end": "1.235",
+        "prefix": "$",
+        "suffix": ""
+      },
+      "wrapperClasses": "col-lg-4",
+      "wrapperAOS": {
+        "aos": "fade-in",
+        "aosDelay": "450",
+        "aosEasing": "ease-in-cubic",
+        "aosId": "counterTile"
+      }
+    }
+  ]
+}
