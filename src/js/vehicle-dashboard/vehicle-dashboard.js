@@ -552,11 +552,19 @@ document.addEventListener("DOMContentLoaded", function() {
   AOS.init({ once: true });
 
   if (!vehicleNumber) {
-    createError(
-      "Error",
-      "no vehicle parameter found",
-      "alert-danger w-100"
-    ).insertAfter(".container h1");
+    // remove all elements except title image
+    $("#container")
+      .children()
+      .not("h1.jumbotron")
+      .remove();
+    $("#container").append(
+      createError(
+        "Error",
+        "<hr>No vehicle parameter was found",
+        "alert-danger w-100"
+      )
+    );
+    //.insertAfter(".container h1");
   } else {
     // Bind CountUp animations on tiles after each aos fade-in event is triggered on an element with data-aos-id='counterTile'
     setupCounterAnimations();
