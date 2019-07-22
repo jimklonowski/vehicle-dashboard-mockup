@@ -1,11 +1,20 @@
 // Sweetalert2
 import Swal from "sweetalert2";
 
+// this is part of corejs now
+//import { URLSearchParams } from "url";
+
 // Number Animation
 import { CountUp } from "countup.js";
 
 // Create HTML from json
-import { createError, createTile, createGoogleMap } from "../util/util";
+import {
+  createError,
+  createTile,
+  createGoogleMap,
+  createVehicleSearch,
+  tileAnimations
+} from "../util/util";
 
 // Animate On Scroll
 import AOS from "aos";
@@ -14,86 +23,143 @@ import "aos/dist/aos.css";
 // Date/Time formatting/sorting
 var moment = require("moment");
 
-// Animates counter tiles
-function setupCounterAnimations() {
-  document.addEventListener("aos:in:counterTile", ({ detail }) => {
-    let target = $(detail).find(".countmeup")[0];
-    let options = {};
-    let delay = $(target).data("countup-delay") || 0;
-    let value = $(target).data("countup-end-val");
+const isProduction = process.env.NODE_ENV === "production";
+//console.log(isProduction);
+const webroot = isProduction ? process.env.WEBROOT : "";
 
-    options.startVal = $(target).data("countup-start-val");
-    options.decimalPlaces = $(target).data("countup-decimal-places");
-    options.duration = $(target).data("countup-duration");
-    options.prefix = $(target).data("countup-prefix") || "";
-    options.suffix = $(target).data("countup-suffix") || "";
+function vehicleDashboardHeader(vehicleNumber) {
+  //let header = $(`<h1 class="jumbotron display-4 mt-3">Vehicle Dashboard</h1>`);
+  let search = createVehicleSearch(vehicleNumber);
+  //header.append(search);
 
-    let animation = new CountUp(target, value, options);
-
-    setTimeout(() => animation.start(), delay);
-
-    target.addEventListener("click", () => {
-      animation.reset();
-      animation.start();
-    });
-  });
+  $("#VehicleDashboardHeader").append(search);
 }
 
 // Fill Vehicle Detail Panel with data
 //prettier-ignore
 function vehicleDetailPanel(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `./assets/json/${vehicleNumber}/vehicle-data.json`;
+  let endpoint = isProduction
+      ? `services?command=VehicleDash.ajax.vehicleDetails&vehicle=${vehicleNumber}`
+      : `${webroot}/assets/json/${vehicleNumber}/vehicle-data.json`;
   
 
   // Insert vehicle detail from json into lists (change this to a get request URL)
   $.getJSON(endpoint).done(function(vehicle) {
     // 1st column
-    $("#VehicleSummary").find("[data-field='account']").text(vehicle.account);
-    $("#VehicleSummary").find("[data-field='billing-sort']").text(vehicle.billing_sort);
+    $("#VehicleSummary").find("[data-field='customer_number']").text(vehicle.customer_number);
+    $("#VehicleSummary").find("[data-field='billing_sort']").text(vehicle.billing_sort);
     $("#VehicleSummary").find("[data-field='vin']").text(vehicle.vin);
     $("#VehicleSummary").find("[data-field='ymm']").text(`${vehicle.vehicle_year} ${vehicle.vehicle_make} ${vehicle.vehicle_model}`);
-    $("#VehicleSummary").find("[data-field='ext-color']").text(vehicle.ext_color);
+    $("#VehicleSummary").find("[data-field='vehicle_exterior_color']").text(vehicle.vehicle_exterior_color);
     // 2nd column
-    
-    $("#VehicleSummary").find("[data-field='center']").text(vehicle.center);
-    $("#VehicleSummary").find("[data-field='center-description']").text(vehicle.center_description);
-    $("#VehicleSummary").find("[data-field='client-vehicle-number']").text(vehicle.client_vehicle_number);
-    $("#VehicleSummary").find("[data-field='status']").text(vehicle.vehicle_status);
-    $("#VehicleSummary").find("[data-field='vehicle-classification']").text(vehicle.vehicle_classification);
-
+    $("#VehicleSummary").find("[data-field='customer_center']").text(vehicle.customer_center);
+    $("#VehicleSummary").find("[data-field='customer_center_description']").text(vehicle.customer_center_description);
+    $("#VehicleSummary").find("[data-field='customer_vehicle_number']").text(vehicle.customer_vehicle_number);
+    $("#VehicleSummary").find("[data-field='vehicle_status']").text(vehicle.vehicle_status);
+    $("#VehicleSummary").find("[data-field='vehicle_classification']").text(vehicle.vehicle_classification);
     // 3rd column
-    $("#VehicleSummary").find("[data-field='department']").text(vehicle.department);
-    $("#VehicleSummary").find("[data-field='project']").text(vehicle.project);
-    $("#VehicleSummary").find("[data-field='division']").text(vehicle.division);
-    $("#VehicleSummary").find("[data-field='group']").text(vehicle.group);
-    $("#VehicleSummary").find("[data-field='client-use']").text(vehicle.client_use);
+    $("#VehicleSummary").find("[data-field='customer_use_1']").text(vehicle.customer_use_1);
+    $("#VehicleSummary").find("[data-field='customer_use_2']").text(vehicle.customer_use_2);
+    $("#VehicleSummary").find("[data-field='customer_use_3']").text(vehicle.customer_use_3);
+    $("#VehicleSummary").find("[data-field='customer_use_4']").text(vehicle.customer_use_4);
+    $("#VehicleSummary").find("[data-field='customer_use_5']").text(vehicle.customer_use_5);
   }).fail(function(response){
-    $('#VehicleSummary').html(createError("ERROR", `No vehicle data for ${vehicleNumber}`, "alert-danger m-0 rounded-0 w-100"));
+    let errorText = response.responseJSON ? response.responseJSON.error : response.statusText;
+    let error = createError("ERROR", errorText, "alert-danger m-0 rounded-0 w-100");
+    $('#VehicleSummary').html(error);
   });
+}
+
+// Apply countup animation to a tile
+function animateTile(tile) {
+  let target = $(tile).find(".countmeup")[0];
+  let options = {};
+  let delay = $(target).data("countup-delay") || 0;
+  let value = $(target).data("countup-end-val");
+
+  options.startVal = $(target).data("countup-start-val");
+  options.decimalPlaces = $(target).data("countup-decimal-places");
+  options.duration = $(target).data("countup-duration");
+  options.prefix = $(target).data("countup-prefix") || "";
+  options.suffix = $(target).data("countup-suffix") || "";
+
+  let animation = new CountUp(target, value, options);
+  setTimeout(
+    () =>
+      animation.start(function() {
+        $(".countmeup").on("click", ".countmeup", function() {
+          animation.reset();
+          animation.start();
+        });
+      }),
+    delay
+  );
+
+  // target.addEventListener("click", () => {
+  //   animation.reset();
+  //   animation.start();
+  // });
+
+  $(target).on("click", () => {
+    //console.log("clicked!");
+    animation.reset();
+    animation.start();
+  });
+}
+
+// Create Licensing Tiles
+function licensingTiles(vehicleNumber) {
+  let endpoint = isProduction
+    ? `services?command=VehicleDash.ajax.licensingTiles&vehicle=${vehicleNumber}`
+    : `${webroot}/assets/json/${vehicleNumber}/licensing-tile-data.json`;
+  //let endpoint = `services?command=VehicleDash.ajax.licensingTiles&vehicle=${vehicleNumber}`;
+  // Read licensing json and create html
+  $.getJSON(endpoint)
+    .done(response => {
+      $.each(response, (index, t) => {
+        let tile = createTile(t);
+        animateTile(tile);
+        $("#LicensingTiles").append(tile);
+      });
+    })
+    .fail(response => {
+      let errorText = response.responseJSON
+        ? response.responseJSON.error
+        : response.statusText;
+      let error = createError(
+        "ERROR",
+        errorText,
+        "alert-danger mx-3 p-4 w-100"
+      );
+      $("#LicensingTiles").append(error);
+    });
 }
 
 // Create Vehicle Tiles
 function vehicleTiles(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `./assets/json/${vehicleNumber}/vehicle-tile-data.json`;
+
+  let endpoint = isProduction
+    ? `services?command=VehicleDash.ajax.vehicleTiles&vehicle=${vehicleNumber}`
+    : `${webroot}/assets/json/${vehicleNumber}/vehicle-tile-data.json`;
 
   // Read vehicle-tile-json and create html
   $.getJSON(endpoint)
-    .done(function(response) {
-      $.each(response.data, function(index, tile) {
-        $("#VehicleTiles").append(createTile(tile));
+    .done(response => {
+      $.each(response, (index, t) => {
+        let tile = createTile(t);
+        animateTile(tile);
+        $("#VehicleTiles").append(tile);
       });
     })
-    .fail(function(response) {
-      console.log(response);
-      $("#VehicleTiles").append(
-        createError(
-          "ERROR",
-          `No vehicle data for ${vehicleNumber}`,
-          "alert-danger mx-3 p-4 w-100"
-        )
-      );
+    .fail(response => {
+      let errorText = response.responseJSON
+        ? response.responseJSON.error
+        : response.statusText;
+      //prettier-ignore
+      let error = createError("ERROR", errorText, "alert-danger mx-3 p-4 w-100");
+      $("#VehicleTiles").append(error);
     });
 }
 
@@ -101,58 +167,61 @@ function vehicleTiles(vehicleNumber) {
 //prettier-ignore
 function driverDetailPanel(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `./assets/json/${vehicleNumber}/driver-data.json`;
+  let endpoint = isProduction ? `services?command=VehicleDash.ajax.driverDetails&vehicle=${vehicleNumber}` : `${webroot}/assets/json/${vehicleNumber}/driver-data.json`;
 
   // Insert vehicle detail from json into lists
   $.getJSON(endpoint).done(function(driver) {
     // 1st column
-    $("#DriverSummary").find("[data-field='last-name']").text(driver.last_name);
-    $("#DriverSummary").find("[data-field='first-name']").text(driver.first_name);
-    $("#DriverSummary").find("[data-field='address-1']").text(driver.address_1);
-    $("#DriverSummary").find("[data-field='address-2']").text(driver.address_2);
-    $("#DriverSummary").find("[data-field='city-state-zip']").text(`${driver.city}, ${driver.state} ${driver.zip}`);
-    $("#DriverSummary").find("[data-field='county']").text(driver.county);
-    $("#DriverSummary").find("[data-field='phone']").text(driver.phone);
-    $("#DriverSummary").find("[data-field='cell']").text(driver.cell);
-    $("#DriverSummary").find("[data-field='fax']").text(driver.fax);
+    $("#DriverSummary").find("[data-field='driver_last_name']").text(driver.driver_last_name);
+    $("#DriverSummary").find("[data-field='driver_first_name']").text(driver.driver_first_name);
+    $("#DriverSummary").find("[data-field='driver_address_1']").text(driver.driver_address_1);
+    $("#DriverSummary").find("[data-field='driver_address_2']").text(driver.driver_address_2);
+    $("#DriverSummary").find("[data-field='driver_city_region_postal']").text(`${driver.driver_city}, ${driver.driver_region} ${driver.driver_postal_code}`);
+    $("#DriverSummary").find("[data-field='driver_county']").text(driver.county);
+    $("#DriverSummary").find("[data-field='driver_phone']").text(driver.phone);
+    $("#DriverSummary").find("[data-field='driver_cell']").text(driver.cell);
+    $("#DriverSummary").find("[data-field='driver_fax']").text(driver.fax);
     // 2nd column
-    $("#DriverSummary").find("[data-field='email']").text(driver.email);
-    $("#DriverSummary").find("[data-field='employee-id']").text(driver.employee_id);
-    $("#DriverSummary").find("[data-field='driver-misc-1']").text(driver.driver_misc_1);
-    $("#DriverSummary").find("[data-field='driver-misc-2']").text(driver.driver_misc_2);
-    $("#DriverSummary").find("[data-field='driver-misc-3']").text(driver.driver_misc_3);
-    $("#DriverSummary").find("[data-field='driver-misc-4']").text(driver.driver_misc_4);
-    $("#DriverSummary").find("[data-field='selector-level']").text(driver.selector_level);
+    $("#DriverSummary").find("[data-field='driver_email']").text(driver.driver_email);
+    $("#DriverSummary").find("[data-field='driver_id']").text(driver.employee_id);
+    $("#DriverSummary").find("[data-field='driver_misc_1']").text(driver.driver_misc_1);
+    $("#DriverSummary").find("[data-field='driver_misc_2']").text(driver.driver_misc_2);
+    $("#DriverSummary").find("[data-field='driver_misc_3']").text(driver.driver_misc_3);
+    $("#DriverSummary").find("[data-field='driver_misc_4']").text(driver.driver_misc_4);
   }).fail(function(response) {
-    $("#DriverSummary").html(
-      createError(
-        "ERROR",
-        `No vehicle data for ${vehicleNumber}`,
-        "alert-danger m-0 rounded-0 w-100"
-      )
-    );
+    let errorText = response.responseJSON ? response.responseJSON.error : response.statusText;
+    let error = createError("ERROR", errorText, "alert-danger m-0 rounded-0 w-100");
+    $('#DriverSummary').html(error);
   });
 }
 
 // Create Fuel Tiles
 function fuelTiles(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `./assets/json/${vehicleNumber}/fuel-tile-data.json`;
+  //let endpoint = `${webroot}/assets/json/${vehicleNumber}/fuel-tile-data.json`;
+
+  let endpoint = isProduction
+    ? `services?command=VehicleDash.ajax.fuelTiles&vehicle=${vehicleNumber}`
+    : `${webroot}/assets/json/${vehicleNumber}/fuel-tile-data.json`;
 
   $.getJSON(endpoint)
-    .done(function(response) {
-      $.each(response.data, function(index, tile) {
-        $("#FuelTiles").append(createTile(tile));
+    .done(response => {
+      $.each(response, (index, t) => {
+        let tile = createTile(t);
+        animateTile(tile);
+        $("#FuelTiles").append(tile);
       });
     })
-    .fail(function(response) {
-      $("#FuelTiles").html(
-        createError(
-          "ERROR",
-          `No vehicle data for ${vehicleNumber}`,
-          "alert-danger mx-3 p-4 w-100"
-        )
+    .fail(response => {
+      let errorText = response.responseJSON
+        ? response.responseJSON.error
+        : response.statusText;
+      let error = createError(
+        "ERROR",
+        errorText,
+        "alert-danger mx-3 p-4 w-100"
       );
+      $("#FuelTiles").html(error);
     });
 }
 
@@ -160,7 +229,7 @@ function fuelTiles(vehicleNumber) {
 //prettier-ignore
 function fuelHistoryTable(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `./assets/json/${vehicleNumber}/fuel-data.json`;
+  let endpoint = `${webroot}/assets/json/${vehicleNumber}/fuel-data.json`;
   $('#FuelSummary').on('error.dt', function(e,settings,techNote,message){
     $('#FuelSummary').html(createError("ERROR", `No fuel data for ${vehicleNumber}.`, "alert-danger m-0 rounded-0 w-100"));
   });
@@ -204,7 +273,7 @@ function fuelHistoryTable(vehicleNumber) {
 // Maintenance History Table
 //prettier-ignore
 function maintenanceHistoryTable(vehicleNumber) {
-  let endpoint = `./assets/json/${vehicleNumber}/maintenance-data.json`;
+  let endpoint = `${webroot}/assets/json/${vehicleNumber}/maintenance-data.json`;
   $("#MaintenanceSummary").on("error.dt", function(e,settings,techNote,message) {
     $("#MaintenanceSummary").html(
       createError(
@@ -241,7 +310,7 @@ function maintenanceHistoryTable(vehicleNumber) {
 //prettier-ignore
 function tollHistoryTable(vehicleNumber){
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `./assets/json/${vehicleNumber}/toll-data.json`;
+  let endpoint = `${webroot}/assets/json/${vehicleNumber}/toll-data.json`;
   $('#TollSummary').on('error.dt', function(e,settings,techNote,message){
     $('#TollSummary').html(createError("ERROR", `No toll data for ${vehicleNumber}.`, "alert-danger m-0 rounded-0 w-100"));
   });
@@ -276,7 +345,7 @@ function tollHistoryTable(vehicleNumber){
 // Billing History Table
 function billingHistoryTable(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `./assets/json/${vehicleNumber}/billing-data.json`;
+  let endpoint = `${webroot}/assets/json/${vehicleNumber}/billing-data.json`;
 
   $("#BillingSummary").on("error.dt", function(e, settings, techNote, message) {
     $("#BillingSummary").html(
@@ -318,7 +387,7 @@ function billingHistoryTable(vehicleNumber) {
         let invoice = $(event.target).data("invoice") || "error";
         Swal.fire({
           title: "Billing Details",
-          text: `Invoice #${invoice}`,
+          text: `Populate this with GET request that returns invoice #${invoice}`,
           type: "info",
           buttonsStyling: false,
           customClass: {
@@ -332,7 +401,7 @@ function billingHistoryTable(vehicleNumber) {
 // Licensing History Table
 function licensingHistoryTable(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `./assets/json/${vehicleNumber}/licensing-data.json`;
+  let endpoint = `${webroot}/assets/json/${vehicleNumber}/licensing-data.json`;
 
   $("#LicensingSummary").on("error.dt", function(
     e,
@@ -402,7 +471,7 @@ function licensingHistoryTable(vehicleNumber) {
 // Violation History Table
 function violationHistoryTable(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `./assets/json/${vehicleNumber}/violation-data.json`;
+  let endpoint = `${webroot}/assets/json/${vehicleNumber}/violation-data.json`;
 
   $("#ViolationSummary").on("error.dt", function(
     e,
@@ -456,7 +525,7 @@ function violationHistoryTable(vehicleNumber) {
         let violation = $(event.target).data("violation") || "error";
         Swal.fire({
           title: `Violation #${violation}`,
-          text: `Data for violation goes here.  Meet Bill Murray`,
+          text: `Populate this with GET request for violation #${violation}.`,
           type: "info",
           buttonsStyling: false,
           customClass: {
@@ -476,7 +545,7 @@ function violationHistoryTable(vehicleNumber) {
 // Inspection History Table
 function inspectionHistoryTable(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `./assets/json/${vehicleNumber}/inspection-data.json`;
+  let endpoint = `${webroot}/assets/json/${vehicleNumber}/inspection-data.json`;
 
   $("#InspectionSummary").on("error.dt", function(
     e,
@@ -514,7 +583,7 @@ function inspectionHistoryTable(vehicleNumber) {
         let inspection = $(event.target).data("inspection") || "error";
         Swal.fire({
           title: "Inspection Report",
-          text: `Data for Inspection #${inspection} goes here`,
+          text: `Populate this modal with GET request for inspection #${inspection}.`,
           type: "info",
           buttonsStyling: false,
           customClass: {
@@ -526,6 +595,18 @@ function inspectionHistoryTable(vehicleNumber) {
       });
     }
   });
+}
+
+function getCounterOptions(elem) {
+  let options = {};
+
+  options.startVal = $(elem).data("countup-start-val");
+  options.decimalPlaces = $(elem).data("countup-decimal-places");
+  options.duration = $(elem).data("countup-duration");
+  options.prefix = $(elem).data("countup-prefix") || "";
+  options.suffix = $(elem).data("countup-suffix") || "";
+
+  return options;
 }
 
 // DOM is loaded
@@ -555,21 +636,19 @@ document.addEventListener("DOMContentLoaded", function() {
     // remove all elements except title image
     $("#container")
       .children()
-      .not("h1.jumbotron")
+      .not("#VehicleDashboardHeader")
       .remove();
-    $("#container").append(
-      createError(
-        "Error",
-        "<hr>No vehicle parameter was found",
-        "alert-danger w-100"
-      )
-    );
+    vehicleDashboardHeader();
+    //$("#container").append(createVehicleSearch());
     //.insertAfter(".container h1");
   } else {
+    //tileAnimations();
     // Bind CountUp animations on tiles after each aos fade-in event is triggered on an element with data-aos-id='counterTile'
-    setupCounterAnimations();
+    //setupCounterAnimations();
+    vehicleDashboardHeader(vehicleNumber);
 
     // populate the detail panels and tiles from json data
+    licensingTiles(vehicleNumber);
     vehicleDetailPanel(vehicleNumber);
     vehicleTiles(vehicleNumber);
     driverDetailPanel(vehicleNumber);

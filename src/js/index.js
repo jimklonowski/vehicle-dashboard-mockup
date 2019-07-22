@@ -1,3 +1,7 @@
+// corejs babel polyfills
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 window.$ = window.jQuery = require("jquery");
 // Import bootstrap JS
 import "bootstrap";
@@ -25,77 +29,8 @@ import "./util/util";
 // import "@progress/kendo-ui/css/web/kendo.common.css";
 // import "@progress/kendo-ui/css/web/kendo.default.css";
 
-// Import FontAwesome
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import {
-  faAlignLeft,
-  faAngry,
-  faArrowLeft,
-  faBatteryThreeQuarters,
-  faBell,
-  faCalendarAlt,
-  faCamera,
-  faCheckCircle,
-  faCircle,
-  faCog,
-  faCogs,
-  faComments,
-  faDollarSign,
-  faEllipsisV,
-  faExclamationCircle,
-  faExclamationTriangle,
-  faFileInvoice,
-  faFileInvoiceDollar,
-  faGasPump,
-  faHandHoldingUsd,
-  faHistory,
-  faMapMarkerAlt,
-  faParking,
-  faPowerOff,
-  faSearch,
-  faShippingFast,
-  faSignOutAlt,
-  faTachometerAlt,
-  faTimesCircle,
-  faToolbox,
-  faUser
-} from "@fortawesome/free-solid-svg-icons";
-
-library.add(
-  faAlignLeft,
-  faAngry,
-  faArrowLeft,
-  faBatteryThreeQuarters,
-  faBell,
-  faCalendarAlt,
-  faCamera,
-  faCheckCircle,
-  faCircle,
-  faCog,
-  faCogs,
-  faComments,
-  faDollarSign,
-  faEllipsisV,
-  faExclamationCircle,
-  faExclamationTriangle,
-  faFileInvoice,
-  faFileInvoiceDollar,
-  faGasPump,
-  faHandHoldingUsd,
-  faHistory,
-  faMapMarkerAlt,
-  faParking,
-  faPowerOff,
-  faSearch,
-  faShippingFast,
-  faSignOutAlt,
-  faTachometerAlt,
-  faTimesCircle,
-  faToolbox,
-  faUser
-);
-
-dom.watch();
+// Import fontawesome icons to be used
+import "./vendors/fontawesome";
 
 // Import Stylesheets
 import "../scss/index.scss";

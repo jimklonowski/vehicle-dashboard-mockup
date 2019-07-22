@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="not ready for production">
     <title>TEST /// Emkay, Inc.</title>
-  <link rel="shortcut icon" href="favicon.ico"><link href="bundle.css" rel="stylesheet"><script type="text/javascript" src="bundle.js"></script></head>
+  <link rel="shortcut icon" href="../apps/VehicleDash/favicon.ico"><link href="../apps/VehicleDash/bundle.css" rel="stylesheet"><script type="text/javascript" src="../apps/VehicleDash/bundle.js"></script></head>
   <body>
     <div id="wrapper">
       <!-- Sidebar Navigation -->
       <!-- https://azouaoui-med.github.io/angular-pro-sidebar/demo/# -->
 <nav id="SideBar">
   <header class="sidebar-header" id="EmkayLogo">
-    <img src="assets/logosmall.png" alt="emkay">
+    <img src="../apps/VehicleDash/assets/logosmall.png" alt="emkay">
     <span>EMKAY, Inc.</span>
   </header>
   <nav class="sidebar-content">
     <div class="sidebar-profile">
       <div class="profile-image">
-        <img src="assets/user.jpg" alt="user" class="img-thumbnail" width="60px">
+        <img src="../apps/VehicleDash/assets/user.jpg" alt="user" class="img-thumbnail" width="60px">
       </div>
       <div class="profile-info">
         <span class="profile-name">Jim Klonowski</span>
@@ -165,9 +165,12 @@
   </nav>
 </div>
 
+
+        <!-- The Main Container -->
         <div class="container" id="container">
-          <h1 class="jumbotron display-4 mt-3">Vehicle Dashboard</h1>
-<section class="row pb-4" data-aos="zoom-in-down" data-aos-easing="ease-in-cubic" data-aos-delay="0" data-aos-offset="0">
+          <h1 id="VehicleDashboardHeader">Vehicle Dashboard</h1>
+<section id="LicensingTiles" class="row" style="min-height:100px;"></section>
+<section class="row py-4" data-aos="zoom-in-down" data-aos-easing="ease-in-cubic" data-aos-delay="0" data-aos-offset="0">
   <div class="col-xl-12">
   <div class="panel">
     <div class="panel-header">
@@ -192,40 +195,38 @@
     <div class="panel-body row no-gutters" id="VehicleSummary">
       <dl class="dashboard-list col-md-6 col-lg-4">
         <dt>Account</dt>
-        <dd data-field="account"></dd>
+        <dd data-field="customer_number"></dd>
         <dt>Billing Sort</dt>
-        <dd data-field="billing-sort"></dd>
+        <dd data-field="billing_sort"></dd>
         <dt>VIN</dt>
-        <dd class="vin"></dd>
+        <dd data-field="vin"></dd>
         <dt>Year Make Model</dt>
         <dd data-field="ymm"></dd>
         <dt>Exterior Color</dt>
-        <dd data-field="ext-color"></dd>
+        <dd data-field="vehicle_exterior_color"></dd>
       </dl>
 
       <dl class="dashboard-list col-md-6 col-lg-4">
         <dt>Center</dt>
-        <dd data-field="center"></dd>
+        <dd data-field="customer_center"></dd>
         <dt>Center Description</dt>
-        <dd data-field="center-description"></dd>
+        <dd data-field="customer_center_description"></dd>
         <dt>Client Vehicle</dt>
-        <dd data-field="client-vehicle-number"></dd>
+        <dd data-field="customer_vehicle_number"></dd>
         <dt>Status</dt>
-        <dd data-field="status"></dd>
+        <dd data-field="vehicle_status"></dd>
         <dt>Category</dt>
-        <dd data-field="vehicle-classification"></dd>
+        <dd data-field="vehicle_classification"></dd>
       </dl>
       <dl class="dashboard-list col-md-6 col-lg-4">
-        <dt>Department</dt>
-        <dd data-field="department"></dd>
-        <dt>Project</dt>
-        <dd data-field="project"></dd>
-        <dt>Division</dt>
-        <dd data-field="division"></dd>
-        <dt>Group</dt>
-        <dd data-field="group"></dd>
-        <dt>Client Use</dt>
-        <dd data-field="client-use"></dd>
+        <dt>Customer Use 2</dt>
+        <dd data-field="customer_use_2"></dd>
+        <dt>Customer Use 3</dt>
+        <dd data-field="customer_use_3"></dd>
+        <dt>Customer Use 4</dt>
+        <dd data-field="customer_use_4"></dd>
+        <dt>Customer Use 5</dt>
+        <dd data-field="customer_use_5"></dd>
       </dl>
     </div>
   </div>
@@ -269,7 +270,7 @@
     </div>
     <div class="panel-body row no-gutters" id="DriverSummary">
       <figure class="w-100 col-md-12 col-lg mb-3">
-        <img src="assets/user.jpg" alt="user" class="d-block mx-auto" width="200px">
+        <img src="../apps/VehicleDash/assets/user.jpg" alt="user" class="d-block mx-auto" width="200px">
         <figcaption class="text-center text-muted">
           <a href="#" class="stretched-link">
             <i class="fas fa-camera fa-fw"></i>
@@ -279,39 +280,37 @@
       </figure>
       <dl class="dashboard-list col-md-6 col-lg-4">
         <dt>Last Name</dt>
-        <dd data-field="last-name"></dd>
+        <dd data-field="driver_last_name"></dd>
         <dt>First Name</dt>
-        <dd data-field="first-name"></dd>
+        <dd data-field="driver_first_name"></dd>
         <dt>Address Line 1</dt>
-        <dd data-field="address-1"></dd>
+        <dd data-field="driver_address_1"></dd>
         <dt>Address Line 2</dt>
-        <dd data-field="address-2"></dd>
+        <dd data-field="driver_address_2"></dd>
         <dt>City/State/ZIP</dt>
-        <dd data-field="city-state-zip"></dd>
+        <dd data-field="driver_city_region_postal"></dd>
         <dt>County</dt>
-        <dd data-field="county"></dd>
+        <dd data-field="driver_county"></dd>
         <dt>Phone</dt>
-        <dd data-field="phone"></dd>
+        <dd data-field="driver_phone"></dd>
         <dt>Cell</dt>
-        <dd data-field="cell"></dd>
+        <dd data-field="driver_cell"></dd>
         <dt>Fax</dt>
-        <dd data-field="fax"></dd>
+        <dd data-field="driver_fax"></dd>
       </dl>
       <dl class="dashboard-list col-md-6 col-lg-4">
         <dt>Email</dt>
-        <dd data-field="email"></dd>
+        <dd data-field="driver_email"></dd>
         <dt>Employee ID</dt>
-        <dd data-field="employee-id"></dd>
+        <dd data-field="driver_id"></dd>
         <dt>Driver Misc 1</dt>
-        <dd data-field="driver-misc-1"></dd>
+        <dd data-field="driver_misc_1"></dd>
         <dt>Driver Misc 2</dt>
-        <dd data-field="driver-misc-2"></dd>
+        <dd data-field="driver_misc_2"></dd>
         <dt>Driver Misc 3</dt>
-        <dd data-field="driver-misc-3"></dd>
+        <dd data-field="driver_misc_3"></dd>
         <dt>Driver Misc 4</dt>
-        <dd data-field="driver-misc-4"></dd>
-        <dt>Selector Level</dt>
-        <dd data-field="selector-level"></dd>
+        <dd data-field="driver_misc_4"></dd>
       </dl>
     </div>
   </div>
@@ -424,11 +423,13 @@
     <div class="panel-body">
       <table class="table" id="TollSummary" style="width:100%;">
         <thead>
-          <th>Date/Time</th>
-          <th>Vehicle Number</th>
-          <th>Location</th>
-          <th>Description</th>
-          <th>Amount</th>
+          <tr>
+            <th>Date/Time</th>
+            <th>Vehicle Number</th>
+            <th>Location</th>
+            <th>Description</th>
+            <th>Amount</th>
+          </tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -459,10 +460,12 @@
     <div class="panel-body">
       <table class="table" id="BillingSummary" style="width:100%;">
         <thead>
-          <th>Bill Date</th>
-          <th>Description</th>
-          <th>Amount</th>
-          <th>Invoice</th>
+          <tr>
+            <th>Bill Date</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Invoice</th>
+          </tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -491,11 +494,13 @@
     <div class="panel-body">
       <table class="table" id="LicensingSummary" style="width:100%;">
         <thead>
-          <th>Exp Date</th>
-          <th>Plate</th>
-          <th>Title</th>
-          <th>Status</th>
-          <th>Needs</th>
+          <tr>
+            <th>Exp Date</th>
+            <th>Plate</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Needs</th>
+          </tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -518,11 +523,13 @@
     <div class="panel-body">
       <table class="table" id="ViolationSummary" style="width:100%;">
         <thead>
-          <th>Date</th>
-          <th>Date Paid</th>
-          <th>Type</th>
-          <th>Amount</th>
-          <th>Image</th>
+          <tr>
+            <th>Date</th>
+            <th>Date Paid</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Image</th>
+          </tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -540,9 +547,11 @@
       <div class="table-responsive">
         <table class="table" id="InspectionSummary" style="width:100%;">
           <thead>
-            <th>Date</th>
-            <th>Comments</th>
-            <th>Report</th>
+            <tr>
+              <th>Date</th>
+              <th>Comments</th>
+              <th>Report</th>
+            </tr>
           </thead>
           <tbody></tbody>
         </table>

@@ -18,94 +18,110 @@ const OptimizeCSSAssetsWebpackPlugin = require("optimize-css-assets-webpack-plug
 const TerserJSWebpackPlugin = require("terser-webpack-plugin");
 
 // configure webpack
-module.exports = {
-  // Entry point: From this file webpack will begin its work
-  entry: "./src/js/index.js",
-  devServer: {
-    headers: {
-      "Access-Control-Allow-Origin": "*"
+module.exports = (env, argv) => {
+  return {
+    // Entry point: From this file webpack will begin its work
+    entry: "./src/js/index.js",
+    devServer: {
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      writeToDisk: true
     },
-    writeToDisk: true
-  },
-  // Overriding default mode.  When set to production, webpack minifies and optimizes output
-  mode: "development",
-  // Webpack loaders
-  module: {
-    rules: [
-      // Loader for .css/.scss files
-      {
-        test: /\.(s*)css$/,
-        use: [
-          MiniCssExtractWebpackPlugin.loader,
-          "css-loader",
-          "postcss-loader",
-          "sass-loader"
-        ]
-      },
-      // Loader for .html files
-      {
-        test: /\.html$/,
-        loader: "html-loader",
-        options: {
-          interpolate: true,
-          minimize: false
+    // Webpack loaders
+    module: {
+      rules: [
+        // Loader for .css/.scss files
+        {
+          test: /\.(s*)css$/,
+          use: [
+            {
+              loader: MiniCssExtractWebpackPlugin.loader,
+              options: {
+                publicPath: "./"
+              }
+            },
+            "css-loader",
+            "postcss-loader",
+            "sass-loader"
+          ]
+        },
+        // Loader for .html files
+        {
+          test: /\.html$/,
+          loader: "html-loader",
+          options: {
+            interpolate: true,
+            minimize: false
+          }
+        },
+        // Loader for font files
+        {
+          test: /\.(eot|ttf|woff|woff2)$/,
+          use: "file-loader?name=fonts/[name].[ext]"
+        },
+        // Loader for image files
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          loader: "file-loader",
+          options: {
+            name: "[name].[ext]",
+            outputPath: "./assets"
+          }
+        },
+        // Loader for babel
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader"
+          }
         }
-      },
-      // Loader for font files
-      {
-        test: /\.(eot|ttf|woff|woff2)$/,
-        use: "file-loader?name=fonts/[name].[ext]"
-      },
-      // Loader for image files
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        loader: "file-loader",
-        options: {
-          name: "[name].[ext]",
-          outputPath: "./assets"
+        // // Loader for JSON data
+        // {
+        //   test: /\.json$/,
+        //   loader: "json-loader"
+        // }
+      ]
+    },
+    optimization: {
+      minimizer: [
+        new TerserJSWebpackPlugin({}),
+        new OptimizeCSSAssetsWebpackPlugin({})
+      ]
+    },
+    plugins: [
+      new DotEnvWebpackPlugin({
+        systemvars: true
+      }),
+      new CleanWebpackPlugin(),
+      new CopyWebpackPlugin([
+        {
+          from: path.resolve(__dirname, "src/assets/json/"),
+          to: path.resolve(__dirname, "dist/assets/json/")
         }
-      }
-      // // Loader for JSON data
-      // {
-      //   test: /\.json$/,
-      //   loader: "json-loader"
-      // }
-    ]
-  },
-  optimization: {
-    minimizer: [
-      new TerserJSWebpackPlugin({}),
-      new OptimizeCSSAssetsWebpackPlugin({})
-    ]
-  },
-  plugins: [
-    new DotEnvWebpackPlugin(),
-    new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, "src/assets/json/"),
-        to: path.resolve(__dirname, "dist/assets/json/")
-      }
-    ]),
-    //new webpack.SourceMapDevToolPlugin(),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
-    }),
-    new HtmlWebpackPlugin({
-      template: "./src/html/index.html",
-      favicon: "./src/assets/images/favicon.ico",
-      inject: "head",
-      minify: true
-    }),
-    new MiniCssExtractWebpackPlugin({
-      filename: "bundle.css"
-    })
-  ],
+      ]),
+      //new webpack.SourceMapDevToolPlugin(),
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery"
+      }),
+      new HtmlWebpackPlugin({
+        template: "./src/html/index.html",
+        favicon: "./src/assets/images/favicon.ico",
+        inject: "head",
+        minify: true
+      }),
+      new MiniCssExtractWebpackPlugin({
+        filename: "bundle.css"
+      })
+    ],
 
-  // Webpack bundles all javascript into this file
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js"
-  }
+    // Webpack bundles all javascript into this file
+    output: {
+      path: path.resolve(__dirname, "dist"),
+      filename: "bundle.js",
+      publicPath: argv.mode == "production" ? "../apps/VehicleDash/" : ""
+    }
+  };
 };

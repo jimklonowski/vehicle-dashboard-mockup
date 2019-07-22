@@ -13,22 +13,16 @@
 //   transition: all 0.3s;
 // }
 
-body {
-  //background-color: $emkay-bg;
-}
-
 #wrapper {
   height: 100vh;
 }
 
 main.content {
+  @extend .pb-4;
   position: relative;
   top: $sidebar-header-height;
   padding-left: 0;
   transition: padding-left $sidebar-transition;
-  .active & {
-    //padding-left: $sidebar-width;
-  }
 }
 
 .overlay {
@@ -56,7 +50,8 @@ main.content {
   z-index: $swal-z-index !important;
 }
 
-h1.jumbotron {
+#VehicleDashboardHeader {
+  @extend .jumbotron, .display-4, .h1;
   background-image: url(../assets/images/whitebg.jpg);
   background-size: cover;
   background-position: center;
