@@ -3,7 +3,9 @@ import { CountUp } from "countup.js";
 import Swal from "sweetalert2";
 
 // Prevent DataTables from showing an alert when ajax error occurs
-$.fn.dataTable.ext.errMode = "none";
+$.fn.DataTable.ext.errMode = "none";
+// Number of pagination buttons
+$.fn.DataTable.ext.pager.numbers_length = 7;
 
 function confirmLogoff() {
   //alert("wow");
@@ -73,7 +75,7 @@ export function createTile(tileJSON) {
   if (tileJSON.counter.enabled) {
     $counter.addClass("countmeup");
     $counter.attr({
-      "data-countup-enabled": false,
+      "data-countup-enabled": `${tileJSON.counter.enabled}`,
       "data-countup-start-val": `${tileJSON.counter.start || 0}`,
       "data-countup-decimal-places": `${tileJSON.counter.decimals || 0}`,
       "data-countup-delay": `${tileJSON.counter.delay || 0}`,

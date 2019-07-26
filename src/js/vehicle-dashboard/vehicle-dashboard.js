@@ -23,6 +23,15 @@ import "aos/dist/aos.css";
 // Date/Time formatting/sorting
 var moment = require("moment");
 
+// overflow ellipsis
+$.fn.dataTable.render.ellipsis = function(cutoff) {
+  return function(data, type, row) {
+    return type === "display" && data.length > cutoff
+      ? data.substr(0, cutoff) + "..."
+      : data;
+  };
+};
+
 const isProduction = process.env.NODE_ENV === "production";
 //console.log(isProduction);
 const webroot = isProduction ? process.env.WEBROOT : "";
@@ -45,7 +54,8 @@ function vehicleDetailPanel(vehicleNumber) {
   
 
   // Insert vehicle detail from json into lists (change this to a get request URL)
-  $.getJSON(endpoint).done(function(vehicle) {
+  $.getJSON(endpoint).done(function(response) {
+    let vehicle = response.data;
     // 1st column
     $("#VehicleSummary").find("[data-field='customer_number']").text(vehicle.customer_number);
     $("#VehicleSummary").find("[data-field='billing_sort']").text(vehicle.billing_sort);
@@ -117,29 +127,28 @@ function licensingTiles(vehicleNumber) {
   // Read licensing json and create html
   $.getJSON(endpoint)
     .done(response => {
-      $.each(response, (index, t) => {
-        let tile = createTile(t);
-        animateTile(tile);
-        $("#LicensingTiles").append(tile);
+      let tileData = response.data;
+      $.each(tileData, (index, t) => {
+        let $tile = createTile(t);
+        animateTile($tile);
+        $("#LicensingTiles").append($tile);
       });
     })
     .fail(response => {
       let errorText = response.responseJSON
         ? response.responseJSON.error
         : response.statusText;
-      let error = createError(
+      let $error = createError(
         "ERROR",
         errorText,
         "alert-danger mx-3 p-4 w-100"
       );
-      $("#LicensingTiles").append(error);
+      $("#LicensingTiles").append($error);
     });
 }
 
 // Create Vehicle Tiles
 function vehicleTiles(vehicleNumber) {
-  // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-
   let endpoint = isProduction
     ? `services?command=VehicleDash.ajax.vehicleTiles&vehicle=${vehicleNumber}`
     : `${webroot}/assets/json/${vehicleNumber}/vehicle-tile-data.json`;
@@ -147,10 +156,11 @@ function vehicleTiles(vehicleNumber) {
   // Read vehicle-tile-json and create html
   $.getJSON(endpoint)
     .done(response => {
-      $.each(response, (index, t) => {
-        let tile = createTile(t);
-        animateTile(tile);
-        $("#VehicleTiles").append(tile);
+      let tileData = response.data;
+      $.each(tileData, (index, t) => {
+        let $tile = createTile(t);
+        animateTile($tile);
+        $("#VehicleTiles").append($tile);
       });
     })
     .fail(response => {
@@ -158,8 +168,8 @@ function vehicleTiles(vehicleNumber) {
         ? response.responseJSON.error
         : response.statusText;
       //prettier-ignore
-      let error = createError("ERROR", errorText, "alert-danger mx-3 p-4 w-100");
-      $("#VehicleTiles").append(error);
+      let $error = createError("ERROR", errorText, "alert-danger mx-3 p-4 w-100");
+      $("#VehicleTiles").append($error);
     });
 }
 
@@ -170,7 +180,8 @@ function driverDetailPanel(vehicleNumber) {
   let endpoint = isProduction ? `services?command=VehicleDash.ajax.driverDetails&vehicle=${vehicleNumber}` : `${webroot}/assets/json/${vehicleNumber}/driver-data.json`;
 
   // Insert vehicle detail from json into lists
-  $.getJSON(endpoint).done(function(driver) {
+  $.getJSON(endpoint).done(function(response) {
+    let driver = response.data;
     // 1st column
     $("#DriverSummary").find("[data-field='driver_last_name']").text(driver.driver_last_name);
     $("#DriverSummary").find("[data-field='driver_first_name']").text(driver.driver_first_name);
@@ -197,54 +208,67 @@ function driverDetailPanel(vehicleNumber) {
 
 // Create Fuel Tiles
 function fuelTiles(vehicleNumber) {
-  // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  //let endpoint = `${webroot}/assets/json/${vehicleNumber}/fuel-tile-data.json`;
-
   let endpoint = isProduction
     ? `services?command=VehicleDash.ajax.fuelTiles&vehicle=${vehicleNumber}`
     : `${webroot}/assets/json/${vehicleNumber}/fuel-tile-data.json`;
 
   $.getJSON(endpoint)
     .done(response => {
-      $.each(response, (index, t) => {
-        let tile = createTile(t);
-        animateTile(tile);
-        $("#FuelTiles").append(tile);
+      let tileData = response.data;
+      $.each(tileData, (index, t) => {
+        let $tile = createTile(t);
+        animateTile($tile);
+        $("#FuelTiles").append($tile);
       });
     })
     .fail(response => {
       let errorText = response.responseJSON
         ? response.responseJSON.error
         : response.statusText;
-      let error = createError(
+      let $error = createError(
         "ERROR",
         errorText,
         "alert-danger mx-3 p-4 w-100"
       );
-      $("#FuelTiles").html(error);
+      $("#FuelTiles").html($error);
     });
 }
 
 // Fuel History DataTable
 //prettier-ignore
 function fuelHistoryTable(vehicleNumber) {
-  // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `${webroot}/assets/json/${vehicleNumber}/fuel-data.json`;
+  let endpoint = isProduction
+  ? `services?command=VehicleDash.ajax.fuelHistory&vehicle=${vehicleNumber}`
+  : `${webroot}/assets/json/${vehicleNumber}/fuel-data.json`;
+
   $('#FuelSummary').on('error.dt', function(e,settings,techNote,message){
     $('#FuelSummary').html(createError("ERROR", `No fuel data for ${vehicleNumber}.`, "alert-danger m-0 rounded-0 w-100"));
   });
 
   $("#FuelSummary").DataTable({
-    ajax: endpoint,
+    ajax: {
+      url: endpoint,
+      dataSrc: function(json) {
+        if (json.data === null) {
+          return [];
+        }
+        return json.data;
+      }
+    },
     columns: [
       {
         data: "date",
         type: "date",
-        render: data => moment(data).format("L")
+        render: data => {
+          if(data){
+            let date = moment(data, "MM/DD/YYYY");
+            return (date && date.isValid()) ? date.format("L") : "";
+          }
+          return "";
+        }
       },
       { data: "odometer" },
       { data: "driver" },
-      { data: "merchant" },
       {
         data: "merchant_address",
         className: "map-link",
@@ -254,7 +278,23 @@ function fuelHistoryTable(vehicleNumber) {
       },
       {
         data: "type",
-        render: (data) => `<span class="badge ${data.toLowerCase().indexOf("gas") !== -1 ? "badge-warning" : "badge-info"} text-light">${data}</span>`
+        render: (data) => {
+          let type = data.toLowerCase();
+          let colorClass = "";
+
+          switch(true){
+            case /wash/.test(type): colorClass = "badge-info"; break;
+            case /prem/.test(type):
+            case /unl/.test(type):
+            case /gas/.test(type): colorClass = "badge-primary"; break;
+            case /tax/.test(type): 
+            case /sal/.test(type): 
+            case /misc/.test(type): colorClass = "badge-warning"; break; 
+            default: colorClass = "badge-secondary"; break;
+          }
+
+          return `<span class="badge ${colorClass} text-light">${data}</span>`
+        }
       },
       { data: "quantity" },
       { data: "unit_cost" },
@@ -273,7 +313,10 @@ function fuelHistoryTable(vehicleNumber) {
 // Maintenance History Table
 //prettier-ignore
 function maintenanceHistoryTable(vehicleNumber) {
-  let endpoint = `${webroot}/assets/json/${vehicleNumber}/maintenance-data.json`;
+  //let endpoint = `${webroot}/assets/json/${vehicleNumber}/maintenance-data.json`;
+  let endpoint = isProduction
+  ? `services?command=VehicleDash.ajax.maintenanceHistory&vehicle=${vehicleNumber}`
+  : `${webroot}/assets/json/${vehicleNumber}/maintenance-data.json`;
   $("#MaintenanceSummary").on("error.dt", function(e,settings,techNote,message) {
     $("#MaintenanceSummary").html(
       createError(
@@ -284,13 +327,27 @@ function maintenanceHistoryTable(vehicleNumber) {
     );
   });
 
-  $("#MaintenanceSummary").DataTable({
-    ajax: endpoint,
+  let table = $("#MaintenanceSummary").DataTable({
+    ajax: {
+      url: endpoint,
+      dataSrc: function(json) {
+        if (json.data === null) {
+          return [];
+        }
+        return json.data;
+      }
+    },
     columns: [
       {
         data: "date",
         type: "date",
-        render: data => moment(data).format("L")
+        render: data => {
+          if(data){
+            let date = moment(data, "MM/DD/YYYY");
+            return (date && date.isValid()) ? date.format("L") : "";
+          }
+          return "";
+        }
       },
       { data: "odometer" },
       { data: "vendor" },
@@ -301,6 +358,7 @@ function maintenanceHistoryTable(vehicleNumber) {
         }
       },
       { data: "service" },
+      { data: "quantity" },
       { data: "amount" }
     ]
   });
@@ -310,27 +368,54 @@ function maintenanceHistoryTable(vehicleNumber) {
 //prettier-ignore
 function tollHistoryTable(vehicleNumber){
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `${webroot}/assets/json/${vehicleNumber}/toll-data.json`;
+  let endpoint = isProduction
+  ? `services?command=VehicleDash.ajax.tollHistory&vehicle=${vehicleNumber}`
+  : `${webroot}/assets/json/${vehicleNumber}/toll-data.json`;
+
   $('#TollSummary').on('error.dt', function(e,settings,techNote,message){
     $('#TollSummary').html(createError("ERROR", `No toll data for ${vehicleNumber}.`, "alert-danger m-0 rounded-0 w-100"));
   });
 
   $('#TollSummary').DataTable({
-    ajax: endpoint,
+    ajax: {
+      url: endpoint,
+      dataSrc: function(json) {
+        if (json.data === null) {
+          return [];
+        }
+        return json.data;
+      }
+    },
     columns: [
       {
-        data: "date_time",
+        data: "date",
         type: "date",
-        render: data => moment(data).format("LLL")
+        render: data => {
+          if(data){
+            let date = moment(data, "DD-MMM-YYYY HH:mm:ss");
+            return (date && date.isValid()) ? date.format("lll") : "";
+          }
+          return "";
+        }
       },
-      { data: "vehicle_number" },
+      {
+        data: "description",
+        render: data => {
+          let parts = data.split(":");
+          let toll = parts[0].trim();
+          return toll;
+        }
+      },
       { 
-        data: "location",
+        data: "description",
         className: "map-link",
         //prettier-ignore
-        render: data => `<button type='button' class='btn btn-sm text-decoration-none btn-link' data-title="${data}" data-url='https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(data)}&key=${process.env.GOOGLE_MAPS_API_KEY}'>${data} <i class="fas fa-fw fa-map-marker-alt"></i></button>`
+        render: data => {
+          let parts = data.split(":");
+          let location = parts[parts.length-1].trim()
+          return `<button type='button' class='btn btn-sm text-decoration-none btn-link' data-title="${location}" data-url='https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(location)}&key=${process.env.GOOGLE_MAPS_API_KEY}'>${location} <i class="fas fa-fw fa-map-marker-alt"></i></button>`
+        }
       },
-      { data: "description" },
       { data: "amount" }
     ],
     initComplete: (settings,json) => 
@@ -345,7 +430,9 @@ function tollHistoryTable(vehicleNumber){
 // Billing History Table
 function billingHistoryTable(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `${webroot}/assets/json/${vehicleNumber}/billing-data.json`;
+  let endpoint = isProduction
+    ? `services?command=VehicleDash.ajax.billingHistory&vehicle=${vehicleNumber}`
+    : `${webroot}/assets/json/${vehicleNumber}/billing-data.json`;
 
   $("#BillingSummary").on("error.dt", function(e, settings, techNote, message) {
     $("#BillingSummary").html(
@@ -358,22 +445,44 @@ function billingHistoryTable(vehicleNumber) {
   });
 
   $("#BillingSummary").DataTable({
-    dom: "",
-    ajax: endpoint,
+    dom: `<'row no-gutters'
+      <'col-12 table-responsive'tr>
+    ><'row no-gutters'
+      <'col-6 my-2 py-2 px-3'i><'col-6 my-1 px-3'p>
+    >`,
+    pageLength: 5,
+    ajax: {
+      url: endpoint,
+      dataSrc: function(json) {
+        if (json.data === null) {
+          return [];
+        }
+        return json.data;
+      }
+    },
     columns: [
       {
         data: "bill_date",
         type: "date",
-        render: data => moment(data).format("MMM YYYY")
+        render: data => {
+          if (data) {
+            let date = moment(data, "MMM-YY");
+            return date && date.isValid() ? date.format("MMM YYYY") : "";
+          }
+          return "";
+        }
       },
       {
-        data: "description",
+        data: "type",
         render: data =>
           `<span class="badge ${
             data.toLowerCase().indexOf("rental") !== -1
               ? "badge-info"
               : "badge-primary"
-          } text-light">${data.toUpperCase()}</span>`
+          } text-light">${data
+            .toUpperCase()
+            .replace("BILLING", "")
+            .trim()}</span>`
       },
       { data: "amount" },
       {
@@ -382,7 +491,7 @@ function billingHistoryTable(vehicleNumber) {
           `<button type='button' class='btn btn-sm btn-link text-decoration-none' data-invoice="${data}">View <i class="fas fa-fw fa-file-invoice-dollar"></i></button>`
       }
     ],
-    initComplete: (settings, json) =>
+    initComplete: (settings, json) => {
       $("[data-invoice]").on("click", event => {
         let invoice = $(event.target).data("invoice") || "error";
         Swal.fire({
@@ -394,14 +503,17 @@ function billingHistoryTable(vehicleNumber) {
             confirmButton: "btn btn-block btn-primary"
           }
         });
-      })
+      });
+    }
   });
 }
 
 // Licensing History Table
 function licensingHistoryTable(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `${webroot}/assets/json/${vehicleNumber}/licensing-data.json`;
+  let endpoint = isProduction
+    ? `services?command=VehicleDash.ajax.licensingHistory&vehicle=${vehicleNumber}`
+    : `${webroot}/assets/json/${vehicleNumber}/licensing-data.json`;
 
   $("#LicensingSummary").on("error.dt", function(
     e,
@@ -419,13 +531,32 @@ function licensingHistoryTable(vehicleNumber) {
   });
 
   $("#LicensingSummary").DataTable({
-    dom: "",
-    ajax: endpoint,
+    dom: `<'row no-gutters'
+      <'col-12 table-responsive'tr>
+    ><'row no-gutters'
+      <'col-6 my-2 py-2 px-3'i><'col-6 my-1 px-3'p>
+    >`,
+    pageLength: 5,
+    ajax: {
+      url: endpoint,
+      dataSrc: function(json) {
+        if (json.data === null) {
+          return [];
+        }
+        return json.data;
+      }
+    },
     columns: [
       {
-        data: "exp_date",
+        data: "expiration_date",
         type: "date",
-        render: data => moment(data).format("L")
+        render: data => {
+          if (data) {
+            let date = moment(data, "MM/DD/YY");
+            return date && date.isValid() ? date.format("L") : "";
+          }
+          return "";
+        }
       },
       {
         data: "plate",
@@ -450,7 +581,7 @@ function licensingHistoryTable(vehicleNumber) {
             : ""
       }
     ],
-    initComplete: (settings, json) =>
+    initComplete: (settings, json) => {
       $("[data-need]").on("click", event => {
         let need = $(event.target).data("need") || "error";
         Swal.fire({
@@ -464,14 +595,17 @@ function licensingHistoryTable(vehicleNumber) {
           showCancelButton: false,
           showCloseButton: true
         });
-      })
+      });
+    }
   });
 }
 
 // Violation History Table
 function violationHistoryTable(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `${webroot}/assets/json/${vehicleNumber}/violation-data.json`;
+  let endpoint = isProduction
+    ? `services?command=VehicleDash.ajax.violationHistory&vehicle=${vehicleNumber}`
+    : `${webroot}/assets/json/${vehicleNumber}/violation-data.json`;
 
   $("#ViolationSummary").on("error.dt", function(
     e,
@@ -489,18 +623,43 @@ function violationHistoryTable(vehicleNumber) {
   });
 
   $("#ViolationSummary").DataTable({
-    dom: "",
-    ajax: endpoint,
+    dom: `<'row no-gutters'
+      <'col-12 table-responsive'tr>
+    ><'row no-gutters'
+      <'col-6 my-2 py-2 px-3'i><'col-6 my-1 px-3'p>
+    >`,
+    pageLength: 5,
+    ajax: {
+      url: endpoint,
+      dataSrc: function(json) {
+        if (json.data === null) {
+          return [];
+        }
+        return json.data;
+      }
+    },
     columns: [
       {
         data: "date",
         type: "date",
-        render: data => moment(data).format("L")
+        render: data => {
+          if (data) {
+            let date = moment(data, "MM/DD/YY");
+            return date && date.isValid() ? date.format("L") : "";
+          }
+          return "";
+        }
       },
       {
-        data: "date_paid",
+        data: "paid_date",
         type: "date",
-        render: data => moment(data).format("L")
+        render: data => {
+          if (data) {
+            let date = moment(data, "MM/DD/YY");
+            return date && date.isValid() ? date.format("L") : "";
+          }
+          return "";
+        }
       },
       {
         data: "type",
@@ -509,7 +668,10 @@ function violationHistoryTable(vehicleNumber) {
             data.toLowerCase().indexOf("parking") !== -1
               ? "badge-warning"
               : "badge-danger"
-          } text-light'>${data.toUpperCase()}</span>`
+          } text-light'>${data
+            .toUpperCase()
+            .split(" ")[0]
+            .trim()}</span>`
       },
       {
         data: "amount"
@@ -545,7 +707,9 @@ function violationHistoryTable(vehicleNumber) {
 // Inspection History Table
 function inspectionHistoryTable(vehicleNumber) {
   // in production, we would have a GET endpoint that takes in a vehicle number and returns json.  for testing, only vehicle /123456/ exists and is served from a static file
-  let endpoint = `${webroot}/assets/json/${vehicleNumber}/inspection-data.json`;
+  let endpoint = isProduction
+    ? `services?command=VehicleDash.ajax.inspectionHistory&vehicle=${vehicleNumber}`
+    : `${webroot}/assets/json/${vehicleNumber}/inspection-data.json`;
 
   $("#InspectionSummary").on("error.dt", function(
     e,
@@ -563,15 +727,37 @@ function inspectionHistoryTable(vehicleNumber) {
   });
 
   $("#InspectionSummary").DataTable({
-    dom: "",
-    ajax: endpoint,
+    dom: `<'row no-gutters'
+      <'col-12 table-responsive'tr>
+    ><'row no-gutters'
+      <'col-6 my-2 py-2 px-3'i><'col-6 my-1 px-3'p>
+    >`,
+    pageLength: 5,
+    ajax: {
+      url: endpoint,
+      dataSrc: function(json) {
+        if (json.data === null) {
+          return [];
+        }
+        return json.data;
+      }
+    },
     columns: [
       {
         data: "date",
         type: "date",
-        render: data => moment(data).format("L")
+        render: data => {
+          if (data) {
+            let date = moment(data, "MM/DD/YYYY h:mm a");
+            return date && date.isValid() ? date.format("L") : "";
+          }
+          return "";
+        }
       },
-      { data: "comments" },
+      {
+        data: "comments",
+        render: $.fn.dataTable.render.ellipsis(25)
+      },
       {
         data: "inspection",
         render: data =>
@@ -622,7 +808,20 @@ document.addEventListener("DOMContentLoaded", function() {
     ><'row no-gutters'
       <'col-6 my-2 py-2 px-3'i><'col-6 my-1 px-3'p>
     >`,
-    order: [[0, "desc"]]
+    order: [[0, "desc"]],
+    language: {
+      paginate: {
+        previous: "&laquo;",
+        next: "&raquo;"
+      },
+      aria: {
+        paginate: {
+          previous: "Previous",
+          next: "Next"
+        }
+      }
+    },
+    drawCallback: () => $("ul.pagination").addClass("pagination-sm")
   });
 
   // get the vehicle number being queried from the get parameter
@@ -639,12 +838,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .not("#VehicleDashboardHeader")
       .remove();
     vehicleDashboardHeader();
-    //$("#container").append(createVehicleSearch());
-    //.insertAfter(".container h1");
   } else {
-    //tileAnimations();
-    // Bind CountUp animations on tiles after each aos fade-in event is triggered on an element with data-aos-id='counterTile'
-    //setupCounterAnimations();
     vehicleDashboardHeader(vehicleNumber);
 
     // populate the detail panels and tiles from json data

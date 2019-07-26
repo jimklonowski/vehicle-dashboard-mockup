@@ -41,6 +41,10 @@
       @include font-size(0.875rem);
       border-top: hidden;
 
+      td.details-control {
+        cursor: pointer;
+      }
+
       td,
       th {
         vertical-align: inherit;
