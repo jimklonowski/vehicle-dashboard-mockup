@@ -85,6 +85,7 @@ module.exports = (env, argv) => {
       ]
     },
     optimization: {
+      minimize: true,
       minimizer: [
         new TerserJSWebpackPlugin({}),
         new OptimizeCSSAssetsWebpackPlugin({})
@@ -95,12 +96,12 @@ module.exports = (env, argv) => {
         systemvars: true
       }),
       new CleanWebpackPlugin(),
-      new CopyWebpackPlugin([
-        {
-          from: path.resolve(__dirname, "src/assets/json/"),
-          to: path.resolve(__dirname, "dist/assets/json/")
-        }
-      ]),
+      // new CopyWebpackPlugin([
+      //   {
+      //     from: path.resolve(__dirname, "src/assets/json/"),
+      //     to: path.resolve(__dirname, "dist/assets/json/")
+      //   }
+      // ]),
       //new webpack.SourceMapDevToolPlugin(),
       new webpack.ProvidePlugin({
         $: "jquery",

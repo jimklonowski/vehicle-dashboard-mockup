@@ -1,7 +1,12 @@
-<div class="col-xl-6 pb-3 pb-xl-0" data-aos="fade-down" data-aos-delay="100">
+<div
+  class="col-xl-12"
+  data-aos="fade-up"
+  data-aos-easing="ease-in-cubic"
+  data-aos-delay="250"
+>
   <div class="panel">
     <div class="panel-header">
-      <span>Billing History</span>
+      <span>Fuel Purchases</span>
       <div class="panel-menu">
         <a
           class="dropdown-toggle"
@@ -23,7 +28,7 @@
             role="menuitem"
             class="dropdown-item"
           >
-            All Billing History
+            All Fuel History
           </button>
           <button
             type="button"
@@ -33,17 +38,30 @@
           >
             Download CSV
           </button>
+          <div class="dropdown-divider"></div>
+          <button
+            type="button"
+            tabindex="0"
+            role="menuitem"
+            class="dropdown-item"
+          >
+            Manage Fuel Cards
+          </button>
         </div>
       </div>
     </div>
     <div class="panel-body">
-      <table class="table" id="BillingSummary" style="width:100%;">
+      <table class="table" id="FuelHistory" style="width:100%;">
         <thead>
           <tr>
-            <th>Bill Date</th>
-            <th>Description</th>
+            <th>Date</th>
+            <th>Odometer</th>
+            <th>Driver</th>
+            <th>Merchant Address</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Unit Cost</th>
             <th>Amount</th>
-            <th>Invoice</th>
           </tr>
         </thead>
         <tbody></tbody>

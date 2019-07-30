@@ -49,11 +49,3 @@ main.content {
 .swal2-container {
   z-index: $swal-z-index !important;
 }
-
-#VehicleDashboardHeader {
-  @extend .jumbotron, .display-4, .h1;
-  background-image: url(../assets/images/whitebg.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
