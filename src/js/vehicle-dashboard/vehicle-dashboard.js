@@ -20,6 +20,8 @@ import {
   setDataTablesDefaults
 } from "./vehicle-dashboard-builders";
 
+import { initLocalization } from "../util/i18n";
+
 //const isProduction = process.env.NODE_ENV === "production";
 //const webroot = isProduction ? process.env.WEBROOT : "";
 
@@ -29,6 +31,10 @@ import {
 $(function() {
   //set datatables defaults
   setDataTablesDefaults();
+
+  //startup localization/internationalization (i18n)
+  initLocalization();
+
   // get the vehicle number being queried from the get parameter
   //prettier-ignore
   let vehicleNumber = new URLSearchParams(window.location.search).get("vehicle");
@@ -45,7 +51,7 @@ $(function() {
     createDriverDetailPanel(vehicleNumber);
 
     // build the tiles
-    createLicensingTiles(vehicleNumber);
+    //createLicensingTiles(vehicleNumber);
     createVehicleTiles(vehicleNumber);
     createFuelTiles(vehicleNumber);
 
@@ -61,7 +67,7 @@ $(function() {
     // remove all elements except search
     $("#container")
       .children()
-      .not("#VehicleDashboardSearch")
+      .not("#VehicleDashboardHeader")
       .remove();
     createVehicleDashboardSearch();
   }

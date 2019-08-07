@@ -4,8 +4,9 @@
   border-width: 0;
 
   .panel-header {
-    @extend .bg-white, .text-muted, .py-3, .mx-4, .border-0, .d-flex;
+    @extend .bg-white, .text-muted, .border-0, .d-flex;
     @include font-size(0.875rem);
+    padding: 0.75rem;
 
     span {
       font-weight: 300;
@@ -32,45 +33,14 @@
       }
     }
   }
-
-  .panel-body {
-    @extend .card-body, .p-0;
-  }
 }
 
-.panel .panel-body table,
+.panel-body table,
 .swal-datatable {
   @extend .table, .table-sm, .table-striped, .table-hover;
   @include font-size(0.875rem, true);
-  border-top: hidden;
-
-  td.details-control {
-    cursor: pointer;
-  }
-
-  td,
-  th {
-    vertical-align: inherit !important;
-    padding: 0.75rem !important;
-  }
-
-  &.dataTable thead > tr > th.sorting_asc,
-  &.dataTable thead > tr > th.sorting_desc {
-    padding-right: 30px !important;
-  }
-
-  &.dataTable thead > tr > th {
-    padding: 0.75rem 1.5rem 0.75rem 0.25rem;
-  }
-
-  td:first-child,
-  th:first-child {
-    padding-left: 1.5rem !important;
-  }
-  td:last-child,
-  th:last-child {
-    padding-right: 1.5rem !important;
-  }
+  padding: 0.75rem 0;
+  white-space: nowrap;
 
   thead {
     font-family: $font-stack;
@@ -81,12 +51,32 @@
   tbody {
     font-family: $data-font-stack;
   }
+
+  thead th {
+    padding: 0.75rem 1.5rem 0.75rem 0.25rem;
+    //width: inherit !important;
+  }
+
+  td,
+  th {
+    vertical-align: middle !important;
+    text-align: left;
+  }
+
+  td.details-control {
+    cursor: pointer;
+  }
+
+  tr[role="row"] td:first-child {
+    padding-left: 1.5rem !important;
+  }
 }
 
+/* DataTables extras (info, paging, etc) */
 .dataTables_info {
   @extend .text-muted;
-  padding-top: 0 !important;
   @include font-size(0.875rem, true);
+  padding-top: 0 !important;
 }
 
 .dataTables_length,
@@ -96,6 +86,35 @@
 }
 .dataTables_filter,
 .dataTables_paginate {
-  text-align: right !important;
   @include font-size(0.875rem, true);
+  text-align: right !important;
+}
+
+/* Sorting arrows - replacing the default arrows with these. */
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+  background-repeat: no-repeat;
+  background-position: center left;
+  padding-left: 20px !important;
+  padding-right: 0 !important;
+  text-align: left;
+  white-space: nowrap;
+
+  &:before,
+  &:after {
+    display: none;
+  }
+}
+
+table.dataTable thead .sorting {
+  background-image: url(../assets/images/sort_both.png);
+}
+
+table.dataTable thead .sorting_asc {
+  background-image: url(../assets/images/sort_asc.png);
+}
+
+table.dataTable thead .sorting_desc {
+  background-image: url(../assets/images/sort_desc.png);
 }

@@ -137,6 +137,24 @@
       <span class="hamburger-label">MENU</span>
     </button>
   </nav>
+  <!-- Language Toggle -->
+  <nav class="navbar-nav ml-auto">
+    <div class="nav-item dropdown">
+      <a class="nav-item nav-link dropdown-toggle" id="languageToggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-globe-americas fa-fw"></i>
+      </a>
+      <div class="dropdown-menu" aria-labelledby="languageToggle">
+        <a class="dropdown-item change-language active" href="#!" data-lang="en">
+          <i class="fas fa-globe-americas fa-fw"></i>
+          &nbsp;English
+        </a>
+        <a class="dropdown-item change-language" href="#!" data-lang="fr">
+          <i class="fab fa-canadian-maple-leaf fa-fw"></i>
+          &nbsp;Fran&ccedil;ais
+        </a>
+      </div>
+    </div>
+  </nav>
 </header>
 
 
@@ -145,36 +163,41 @@
         <!-- Secondary Navigation Bar -->
         <div id="AltBar">
   <nav class="nav nav-underline">
-    <a class="nav-link active" href="#!">General</a>
-    <a class="nav-link" href="#!">Expense Summary</a>
-    <a class="nav-link" href="#!">Billing History</a>
-    <a class="nav-link" href="#!">Maintenance</a>
-    <a class="nav-link" href="#!">Fuel</a>
-    <a class="nav-link" href="#!">Licensing</a>
-    <a class="nav-link" href="#!">Accident</a>
-    <a class="nav-link" href="#!">Rental History</a>
-    <a class="nav-link" href="#!">Inspections</a>
-    <a class="nav-link" href="#!">Drivers</a>
-    <a class="nav-link" href="#!">Documents</a>
-    <a class="nav-link" href="#!">Reported Odometers</a>
-    <a class="nav-link" href="#!">Toll Transactions</a>
-    <a class="nav-link" href="#!">Transport/Storage</a>
-    <a class="nav-link" href="#!">Violations</a>
-    <a class="nav-link" href="#!">eVoucher</a>
-    <a class="nav-link" href="#!">SafeRoads</a>
+    <a class="nav-link active" href="#!" data-i18n="alt_bar.general"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.expenses"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.billing"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.maintenance"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.fuel"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.licensing"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.accident"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.rentals"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.inspections"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.drivers"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.documents"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.odometers"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.tolls"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.transports"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.violations"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.evoucher"></a>
+    <a class="nav-link" href="#!" data-i18n="alt_bar.saferoads"></a>
   </nav>
 </div>
 
 
         <!-- The Main Container -->
         <div class="container" id="container">
-          <h1 id="VehicleDashboardSearch">Vehicle Dashboard</h1>
-<section id="LicensingTiles" class="row" style="min-height:100px;"></section>
+          <header id="VehicleDashboardHeader">
+  <h1 data-i18n="vehicle_dashboard.title" class="display-4">
+    Vehicle Dashboard
+  </h1>
+  <div id="VehicleDashboardSearch"></div>
+</header>
+<!-- <section id="LicensingTiles" class="row" style="min-height:100px;"></section> -->
 <section class="row py-4" data-aos="zoom-in-down" data-aos-easing="ease-in-cubic" data-aos-delay="0" data-aos-offset="0">
   <div class="col-xl-12">
   <div class="panel">
     <div class="panel-header">
-      <span>Vehicle Detail</span>
+      <span data-i18n="vehicle_summary.title">Vehicle Detail</span>
       <div class="panel-menu">
         <a class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
           <i class="fas fa-ellipsis-v"></i>
@@ -194,54 +217,50 @@
     </div>
     <div class="panel-body row no-gutters" id="VehicleSummary">
       <dl class="dashboard-list col-md-6 col-lg-4">
-        <dt>Account</dt>
-        <dd data-field="customer_number"></dd>
-        <dt>Billing Sort</dt>
-        <dd data-field="billing_sort"></dd>
-        <dt>VIN</dt>
-        <dd data-field="vin"></dd>
-        <dt>Year Make Model</dt>
-        <dd data-field="ymm"></dd>
-        <dt>Exterior Color</dt>
-        <dd data-field="vehicle_exterior_color"></dd>
+        <dt data-i18n="vehicle_summary.account">Account</dt>
+        <dd data-field="vehicle_summary.account"></dd>
+        <dt data-i18n="vehicle_summary.billing_sort">Billing Sort</dt>
+        <dd data-field="vehicle_summary.billing_sort"></dd>
+        <dt data-i18n="vehicle_summary.vin">VIN</dt>
+        <dd data-field="vehicle_summary.vin"></dd>
+        <dt data-i18n="vehicle_summary.ymm">Year/Make/Model</dt>
+        <dd>
+          <span data-field="vehicle_summary.year"></span>
+          <span data-field="vehicle_summary.make"></span>
+          <span data-field="vehicle_summary.model"></span>
+        </dd>
+        <dt data-i18n="vehicle_summary.ext_color">Exterior Color</dt>
+        <dd data-field="vehicle_summary.ext_color"></dd>
       </dl>
 
       <dl class="dashboard-list col-md-6 col-lg-4">
-        <dt>Center</dt>
-        <dd data-field="customer_center"></dd>
-        <dt>Center Description</dt>
-        <dd data-field="customer_center_description"></dd>
-        <dt>Client Vehicle</dt>
-        <dd data-field="customer_vehicle_number"></dd>
-        <dt>Status</dt>
-        <dd data-field="vehicle_status"></dd>
-        <dt>Category</dt>
-        <dd data-field="vehicle_classification"></dd>
+        <dt data-i18n="vehicle_summary.center">Center</dt>
+        <dd data-field="vehicle_summary.center"></dd>
+        <dt data-i18n="vehicle_summary.center_description">
+          Center Description
+        </dt>
+        <dd data-field="vehicle_summary.center_description"></dd>
+        <dt data-i18n="vehicle_summary.client_vehicle">Client Vehicle</dt>
+        <dd data-field="vehicle_summary.client_vehicle"></dd>
+        <dt data-i18n="vehicle_summary.status">Status</dt>
+        <dd data-field="vehicle_summary.status"></dd>
+        <dt data-i18n="vehicle_summary.classification">Category</dt>
+        <dd data-field="vehicle_summary.classification"></dd>
       </dl>
       <dl class="dashboard-list col-md-6 col-lg-4">
-        <dt>Customer Use 2</dt>
-        <dd data-field="customer_use_2"></dd>
-        <dt>Customer Use 3</dt>
-        <dd data-field="customer_use_3"></dd>
-        <dt>Customer Use 4</dt>
-        <dd data-field="customer_use_4"></dd>
-        <dt>Customer Use 5</dt>
-        <dd data-field="customer_use_5"></dd>
+        <dt data-i18n="vehicle_summary.customer_use_1">Client Use 1</dt>
+        <dd data-field="vehicle_summary.customer_use_1"></dd>
+        <dt data-i18n="vehicle_summary.customer_use_2">Client Use 2</dt>
+        <dd data-field="vehicle_summary.customer_use_2"></dd>
+        <dt data-i18n="vehicle_summary.customer_use_3">Client Use 3</dt>
+        <dd data-field="vehicle_summary.customer_use_3"></dd>
+        <dt data-i18n="vehicle_summary.customer_use_4">Client Use 4</dt>
+        <dd data-field="vehicle_summary.customer_use_4"></dd>
+        <dt data-i18n="vehicle_summary.customer_use_5">Client Use 5</dt>
+        <dd data-field="vehicle_summary.customer_use_5"></dd>
       </dl>
     </div>
   </div>
-  <!-- <dl class="dashboard-list col-lg-6">
-    <dt>Department</dt>
-    <dd></dd>
-    <dt>Project</dt>
-    <dd></dd>
-    <dt>Division</dt>
-    <dd></dd>
-    <dt>Group</dt>
-    <dd></dd>
-    <dt>Client Use 5</dt>
-    <dd></dd>
-  </dl> -->
 </div>
 
 </section>
@@ -250,7 +269,7 @@
   <div class="col-xl-12 py-4">
   <div class="panel">
     <div class="panel-header">
-      <span>Driver Detail</span>
+      <span data-i18n="driver_summary.title">Driver Detail</span>
       <div class="panel-menu">
         <a class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
           <i class="fas fa-ellipsis-v"></i>
@@ -279,38 +298,42 @@
         </figcaption>
       </figure>
       <dl class="dashboard-list col-md-6 col-lg-4">
-        <dt>Last Name</dt>
-        <dd data-field="driver_last_name"></dd>
-        <dt>First Name</dt>
-        <dd data-field="driver_first_name"></dd>
-        <dt>Address Line 1</dt>
-        <dd data-field="driver_address_1"></dd>
-        <dt>Address Line 2</dt>
-        <dd data-field="driver_address_2"></dd>
-        <dt>City/State/ZIP</dt>
-        <dd data-field="driver_city_region_postal"></dd>
-        <dt>County</dt>
-        <dd data-field="driver_county"></dd>
-        <dt>Phone</dt>
-        <dd data-field="driver_phone"></dd>
-        <dt>Cell</dt>
-        <dd data-field="driver_cell"></dd>
-        <dt>Fax</dt>
-        <dd data-field="driver_fax"></dd>
+        <dt data-i18n="driver_summary.last_name">Last Name</dt>
+        <dd data-field="driver_summary.last_name"></dd>
+        <dt data-i18n="driver_summary.first_name">First Name</dt>
+        <dd data-field="driver_summary.first_name"></dd>
+        <dt data-i18n="driver_summary.address_1">Address 1</dt>
+        <dd data-field="driver_summary.address_1"></dd>
+        <dt data-i18n="driver_summary.address_2">Address 2</dt>
+        <dd data-field="driver_summary.address_2"></dd>
+        <dt data-i18n="driver_summary.city_region_postal">City State ZIP</dt>
+        <dd>
+          <span data-field="driver_summary.city"></span>
+          <span data-field="driver_summary.region"></span>
+          <span data-field="driver_summary.postal"></span>
+        </dd>
+        <dt data-i18n="driver_summary.county">County</dt>
+        <dd data-field="driver_summary.county"></dd>
+        <dt data-i18n="driver_summary.phone">Phone</dt>
+        <dd data-field="driver_summary.phone"></dd>
+        <dt data-i18n="driver_summary.cell">Cell</dt>
+        <dd data-field="driver_summary.cell"></dd>
+        <dt data-i18n="driver_summary.fax">Fax</dt>
+        <dd data-field="driver_summary.fax"></dd>
       </dl>
       <dl class="dashboard-list col-md-6 col-lg-4">
-        <dt>Email</dt>
-        <dd data-field="driver_email"></dd>
-        <dt>Employee ID</dt>
-        <dd data-field="driver_id"></dd>
-        <dt>Driver Misc 1</dt>
-        <dd data-field="driver_misc_1"></dd>
-        <dt>Driver Misc 2</dt>
-        <dd data-field="driver_misc_2"></dd>
-        <dt>Driver Misc 3</dt>
-        <dd data-field="driver_misc_3"></dd>
-        <dt>Driver Misc 4</dt>
-        <dd data-field="driver_misc_4"></dd>
+        <dt data-i18n="driver_summary.email">Email</dt>
+        <dd data-field="driver_summary.email"></dd>
+        <dt data-i18n="driver_summary.driver_id">Driver ID</dt>
+        <dd data-field="driver_summary.driver_id"></dd>
+        <dt data-i18n="driver_summary.misc_1">Driver Misc 1</dt>
+        <dd data-field="driver_summary.misc_1"></dd>
+        <dt data-i18n="driver_summary.misc_2">Driver Misc 2</dt>
+        <dd data-field="driver_summary.misc_2"></dd>
+        <dt data-i18n="driver_summary.misc_3">Driver Misc 3</dt>
+        <dd data-field="driver_summary.misc_3"></dd>
+        <dt data-i18n="driver_summary.misc_4">Driver Misc 4</dt>
+        <dd data-field="driver_summary.misc_4"></dd>
       </dl>
     </div>
   </div>
@@ -322,7 +345,7 @@
   <div class="col-xl-12" data-aos="fade-up" data-aos-easing="ease-in-cubic" data-aos-delay="250">
   <div class="panel">
     <div class="panel-header">
-      <span>Fuel Purchases</span>
+      <span data-i18n="fuel_history.title">Fuel Purchases</span>
       <div class="panel-menu">
         <a class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
           <i class="fas fa-ellipsis-v"></i>
@@ -345,14 +368,14 @@
       <table class="table" id="FuelHistory" style="width:100%;">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Odometer</th>
-            <th>Driver</th>
-            <th>Merchant Address</th>
-            <th>Type</th>
-            <th>Quantity</th>
-            <th>Unit Cost</th>
-            <th>Amount</th>
+            <th data-i18n="fuel_history.date">Date</th>
+            <th data-i18n="fuel_history.odometer">Odometer</th>
+            <th data-i18n="fuel_history.driver">Driver</th>
+            <th data-i18n="fuel_history.merchant_address">Merchant Address</th>
+            <th data-i18n="fuel_history.type">Type</th>
+            <th data-i18n="fuel_history.quantity">Quantity</th>
+            <th data-i18n="fuel_history.unit_cost">Unit Cost</th>
+            <th data-i18n="fuel_history.amount">Amount</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -366,7 +389,7 @@
   <div class="col-xl-12" data-aos="fade-up" data-aos-delay="100">
   <div class="panel">
     <div class="panel-header">
-      <span>Recent Maintenance</span>
+      <span data-i18n="maintenance_history.title">Recent Maintenance</span>
       <div class="panel-menu">
         <a class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
           <i class="fas fa-ellipsis-v"></i>
@@ -385,13 +408,14 @@
       <table class="table" id="MaintenanceHistory" style="width:100%;">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Odometer</th>
-            <th>Vendor</th>
-            <th>In Network</th>
-            <th>Service</th>
-            <th>Quantity</th>
-            <th>Amount</th>
+            <th data-i18n="maintenance_history.date">Date</th>
+            <th data-i18n="maintenance_history.odometer">Odometer</th>
+            <th data-i18n="maintenance_history.vendor">Vendor</th>
+            <th data-i18n="maintenance_history.in_network">In Network</th>
+            <th data-i18n="maintenance_history.service">Service</th>
+            <th data-i18n="maintenance_history.quantity">Quantity</th>
+            <th data-i18n="maintenance_history.amount">Amount</th>
+            <th></th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -405,7 +429,7 @@
   <div class="col-xl-12" data-aos="fade-up" data-aos-delay="100">
   <div class="panel">
     <div class="panel-header">
-      <span>Toll History</span>
+      <span data-i18n="toll_history.title">Toll History</span>
       <div class="panel-menu">
         <a class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
           <i class="fas fa-ellipsis-v"></i>
@@ -424,10 +448,10 @@
       <table class="table" id="TollHistory" style="width:100%;">
         <thead>
           <tr>
-            <th>Date/Time</th>
-            <th>Description</th>
-            <th>Location</th>
-            <th>Amount</th>
+            <th data-i18n="toll_history.date_time">Date/Time</th>
+            <th data-i18n="toll_history.description">Description</th>
+            <th data-i18n="toll_history.location">Location</th>
+            <th data-i18n="toll_history.amount">Amount</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -441,7 +465,7 @@
   <div class="col-xl-6 pb-3 pb-xl-0" data-aos="fade-down" data-aos-delay="100">
   <div class="panel">
     <div class="panel-header">
-      <span>Billing History</span>
+      <span data-i18n="billing_history.title">Billing History</span>
       <div class="panel-menu">
         <a class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
           <i class="fas fa-ellipsis-v"></i>
@@ -460,10 +484,10 @@
       <table class="table" id="BillingHistory" style="width:100%;">
         <thead>
           <tr>
-            <th>Bill Date</th>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Details</th>
+            <th data-i18n="billing_history.bill_date">Bill Date</th>
+            <th data-i18n="billing_history.description">Description</th>
+            <th data-i18n="billing_history.amount">Amount</th>
+            <th data-i18n="billing_history.details"></th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -475,7 +499,7 @@
   <div class="col-xl-6 pt-3 pt-xl-0" data-aos="fade-down" data-aos-delay="200">
   <div class="panel">
     <div class="panel-header">
-      <span>Licensing History</span>
+      <span data-i18n="licensing_history.title">Licensing History</span>
       <div class="panel-menu">
         <a class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
           <i class="fas fa-ellipsis-v"></i>
@@ -494,10 +518,10 @@
       <table class="table" id="LicensingHistory" style="width:100%;">
         <thead>
           <tr>
-            <th>Exp Date</th>
-            <th>Status</th>
-            <th>Details</th>
-            <th>Needs</th>
+            <th data-i18n="licensing_history.exp_date">Exp Date</th>
+            <th data-i18n="licensing_history.status">Status</th>
+            <th data-i18n="licensing_history.details">Details</th>
+            <th data-i18n="licensing_history.needs">Needs</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -511,7 +535,7 @@
   <div class="col-xl-6 pb-3 pb-xl-0" data-aos="fade-up" data-aos-delay="100">
   <div class="panel">
     <div class="panel-header">
-      <span>Violation History</span>
+      <span data-i18n="violation_history.title">Violation History</span>
       <div class="panel-menu">
         <a class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
           <i class="fas fa-ellipsis-v"></i>
@@ -522,11 +546,11 @@
       <table class="table" id="ViolationHistory" style="width:100%;">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Paid</th>
-            <th>Type</th>
-            <th>Amount</th>
-            <th>Image</th>
+            <th data-i18n="violation_history.date">Date</th>
+            <th data-i18n="violation_history.paid_date">Paid</th>
+            <th data-i18n="violation_history.type">Type</th>
+            <th data-i18n="violation_history.amount">Amount</th>
+            <th data-i18n="violation_history.details">Details</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -538,7 +562,7 @@
   <div class="col-xl-6 pt-3 pt-xl-0" data-aos="fade-up" data-aos-delay="200">
   <div class="panel">
     <div class="panel-header">
-      <span>Inspection History</span>
+      <span data-i18n="inspection_history.title">Inspection History</span>
       <div class="panel-menu"></div>
     </div>
     <div class="panel-body">
@@ -546,9 +570,9 @@
         <table class="table" id="InspectionHistory" style="width:100%;">
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Comments</th>
-              <th>Report</th>
+              <th data-i18n="inspection_history.date">Date</th>
+              <th data-i18n="inspection_history.comments">Comments</th>
+              <th data-i18n="inspection_history.report"></th>
             </tr>
           </thead>
           <tbody></tbody>

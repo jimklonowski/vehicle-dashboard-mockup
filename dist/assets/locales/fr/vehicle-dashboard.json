@@ -1,0 +1,130 @@
+{
+  "vehicle_dashboard": {
+    "title": "Véhicule Tableau de Bord",
+    "search": "Recherche...",
+    "vehicle_number": "Numéro de Véhicule"
+  },
+  "alt_bar": {
+    "general": "Général",
+    "expenses": "Dépenses",
+    "billing": "Facturation",
+    "maintenance": "Maintenance",
+    "fuel": "Fuel",
+    "licensing": "Licensing",
+    "accident": "Accident",
+    "rentals": "Histoire de la Location",
+    "inspections": "Inspections",
+    "drivers": "Drivers",
+    "documents": "Documents",
+    "odometers": "Odomètres Rapportés",
+    "tolls": "Transactions de Péage",
+    "transports": "Transport / Stockage",
+    "violations": "Violations",
+    "evoucher": "eVoucher",
+    "saferoads": "SafeRoads"
+  },
+  "vehicle_summary": {
+    "title": "Détail du Véhicule",
+    "account": "Compte",
+    "billing_sort": "Sorte de Facturation",
+    "vin": "NIV",
+    "ymm": "Année / Marque / Modèle",
+    "year": "Année",
+    "make": "Marque",
+    "model": "Modèle",
+    "ext_color": "Couleur Extérieure",
+    "center": "Département",
+    "center_description": "Description du Département",
+    "client_vehicle": "Véhicule du Client",
+    "status": "Statut",
+    "classification": "Classification du Véhicule",
+    "customer_use_1": "Utilisation par le Client 1",
+    "customer_use_2": "Utilisation par le Client 2",
+    "customer_use_3": "Utilisation par le Client 3",
+    "customer_use_4": "Utilisation par le Client 4",
+    "customer_use_5": "Utilisation par le Client 5"
+  },
+  "driver_summary": {
+    "title": "Détails du pilote",
+    "driver_id": "Numéro d'identification",
+    "last_name": "Nom de famille",
+    "first_name": "Prénom",
+    "address_1": "Adresse 1",
+    "address_2": "Adresse 2",
+    "city": "Ville",
+    "region": "Province",
+    "postal": "Code Postal",
+    "city_region_postal": "Ville, Province, Code Postal",
+    "phone": "Numéro de Téléphone",
+    "fax": "Numéro de Fax",
+    "cell": "Téléphone Portable",
+    "county": "Comté",
+    "email": "Email",
+    "misc_1": "Divers 1",
+    "misc_2": "Divers 2",
+    "misc_3": "Divers 3",
+    "misc_4": "Divers 4"
+  },
+  "fuel_history": {
+    "title": "Achats de Carburant",
+    "date": "Date",
+    "odometer": "Odomètre",
+    "driver": "Driver",
+    "merchant_address": "Adresse",
+    "type": "Catégorie",
+    "quantity": "Quantité",
+    "unit_cost": "Coût Unitaire",
+    "amount": "Somme"
+  },
+  "maintenance_history": {
+    "title": "Maintenance Récente",
+    "date": "Date",
+    "odometer": "Odomètre",
+    "vendor": "Vendor",
+    "in_network": "Network",
+    "service": "Service",
+    "quantity": "Quantité",
+    "amount": "Somme"
+  },
+  "toll_history": {
+    "title": "Historique du Péage",
+    "date_time": "Date / Heure",
+    "description": "Description",
+    "location": "Localisation",
+    "amount": "Somme"
+  },
+  "billing_history": {
+    "title": "Historique de Facturation",
+    "bill_date": "Date de Facturation",
+    "description": "Description",
+    "amount": "Somme",
+    "details": "Détails",
+    "voucher": "Bon",
+    "voucher_date": "Date du bon"
+  },
+  "licensing_history": {
+    "title": "Historique des Licences",
+    "exp_date": "Date d'expiration",
+    "status": "Statut",
+    "details": "Détails",
+    "details_title": "Détails de la licence",
+    "needs": "Besoins",
+    "needs_title": "Besoins de la licence",
+    "date": "Date",
+    "description": "Description"
+  },
+  "violation_history": {
+    "title": "Historique de la violation",
+    "date": "Date",
+    "paid_date": "Payé",
+    "type": "Type",
+    "amount": "Somme",
+    "details": "Détails"
+  },
+  "inspection_history": {
+    "title": "Historique d'inspection",
+    "date": "Date",
+    "comments": "Commentaires",
+    "report": "Report"
+  }
+}

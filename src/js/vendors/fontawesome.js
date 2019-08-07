@@ -21,6 +21,7 @@ import {
   faExclamationTriangle,
   faFileInvoice,
   faFileInvoiceDollar,
+  faFlagUsa,
   faGasPump,
   faGlobeAmericas,
   faHandHoldingUsd,
@@ -40,6 +41,8 @@ import {
   faUser
 } from "@fortawesome/free-solid-svg-icons";
 
+import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
+
 library.add(
   faAlignLeft,
   faAngry,
@@ -49,6 +52,7 @@ library.add(
   faCalendarAlt,
   faCalendarTimes,
   faCamera,
+  faCanadianMapleLeaf,
   faCarSide,
   faCheckCircle,
   faCircle,
@@ -61,6 +65,7 @@ library.add(
   faExclamationTriangle,
   faFileInvoice,
   faFileInvoiceDollar,
+  faFlagUsa,
   faGasPump,
   faGlobeAmericas,
   faHandHoldingUsd,

@@ -1,7 +1,7 @@
 <div class="col-xl-12">
   <div class="panel">
     <div class="panel-header">
-      <span>Vehicle Detail</span>
+      <span data-i18n="vehicle_summary.title">Vehicle Detail</span>
       <div class="panel-menu">
         <a
           class="dropdown-toggle"
@@ -46,52 +46,48 @@
     </div>
     <div class="panel-body row no-gutters" id="VehicleSummary">
       <dl class="dashboard-list col-md-6 col-lg-4">
-        <dt>Account</dt>
-        <dd data-field="customer_number"></dd>
-        <dt>Billing Sort</dt>
-        <dd data-field="billing_sort"></dd>
-        <dt>VIN</dt>
-        <dd data-field="vin"></dd>
-        <dt>Year Make Model</dt>
-        <dd data-field="ymm"></dd>
-        <dt>Exterior Color</dt>
-        <dd data-field="vehicle_exterior_color"></dd>
+        <dt data-i18n="vehicle_summary.account">Account</dt>
+        <dd data-field="vehicle_summary.account"></dd>
+        <dt data-i18n="vehicle_summary.billing_sort">Billing Sort</dt>
+        <dd data-field="vehicle_summary.billing_sort"></dd>
+        <dt data-i18n="vehicle_summary.vin">VIN</dt>
+        <dd data-field="vehicle_summary.vin"></dd>
+        <dt data-i18n="vehicle_summary.ymm">Year/Make/Model</dt>
+        <dd>
+          <span data-field="vehicle_summary.year"></span>
+          <span data-field="vehicle_summary.make"></span>
+          <span data-field="vehicle_summary.model"></span>
+        </dd>
+        <dt data-i18n="vehicle_summary.ext_color">Exterior Color</dt>
+        <dd data-field="vehicle_summary.ext_color"></dd>
       </dl>
 
       <dl class="dashboard-list col-md-6 col-lg-4">
-        <dt>Center</dt>
-        <dd data-field="customer_center"></dd>
-        <dt>Center Description</dt>
-        <dd data-field="customer_center_description"></dd>
-        <dt>Client Vehicle</dt>
-        <dd data-field="customer_vehicle_number"></dd>
-        <dt>Status</dt>
-        <dd data-field="vehicle_status"></dd>
-        <dt>Category</dt>
-        <dd data-field="vehicle_classification"></dd>
+        <dt data-i18n="vehicle_summary.center">Center</dt>
+        <dd data-field="vehicle_summary.center"></dd>
+        <dt data-i18n="vehicle_summary.center_description">
+          Center Description
+        </dt>
+        <dd data-field="vehicle_summary.center_description"></dd>
+        <dt data-i18n="vehicle_summary.client_vehicle">Client Vehicle</dt>
+        <dd data-field="vehicle_summary.client_vehicle"></dd>
+        <dt data-i18n="vehicle_summary.status">Status</dt>
+        <dd data-field="vehicle_summary.status"></dd>
+        <dt data-i18n="vehicle_summary.classification">Category</dt>
+        <dd data-field="vehicle_summary.classification"></dd>
       </dl>
       <dl class="dashboard-list col-md-6 col-lg-4">
-        <dt>Customer Use 2</dt>
-        <dd data-field="customer_use_2"></dd>
-        <dt>Customer Use 3</dt>
-        <dd data-field="customer_use_3"></dd>
-        <dt>Customer Use 4</dt>
-        <dd data-field="customer_use_4"></dd>
-        <dt>Customer Use 5</dt>
-        <dd data-field="customer_use_5"></dd>
+        <dt data-i18n="vehicle_summary.customer_use_1">Client Use 1</dt>
+        <dd data-field="vehicle_summary.customer_use_1"></dd>
+        <dt data-i18n="vehicle_summary.customer_use_2">Client Use 2</dt>
+        <dd data-field="vehicle_summary.customer_use_2"></dd>
+        <dt data-i18n="vehicle_summary.customer_use_3">Client Use 3</dt>
+        <dd data-field="vehicle_summary.customer_use_3"></dd>
+        <dt data-i18n="vehicle_summary.customer_use_4">Client Use 4</dt>
+        <dd data-field="vehicle_summary.customer_use_4"></dd>
+        <dt data-i18n="vehicle_summary.customer_use_5">Client Use 5</dt>
+        <dd data-field="vehicle_summary.customer_use_5"></dd>
       </dl>
     </div>
   </div>
-  <!-- <dl class="dashboard-list col-lg-6">
-    <dt>Department</dt>
-    <dd></dd>
-    <dt>Project</dt>
-    <dd></dd>
-    <dt>Division</dt>
-    <dd></dd>
-    <dt>Group</dt>
-    <dd></dd>
-    <dt>Client Use 5</dt>
-    <dd></dd>
-  </dl> -->
 </div>

@@ -32,5 +32,8 @@ import "./util/util";
 // Import fontawesome icons to be used
 import "./vendors/fontawesome";
 
+// Handle i18n
+import "./util/i18n";
+
 // Import Stylesheets
 import "../scss/index.scss";

@@ -1,0 +1,130 @@
+{
+  "vehicle_dashboard": {
+    "title": "Vehicle Dashboard",
+    "search": "Search...",
+    "vehicle_number": "Vehicle Number"
+  },
+  "alt_bar": {
+    "general": "General",
+    "expenses": "Expenses",
+    "billing": "Billing",
+    "maintenance": "Maintenance",
+    "fuel": "Fuel",
+    "licensing": "Licensing",
+    "accident": "Accidents",
+    "rentals": "Rental History",
+    "inspections": "Inspections",
+    "drivers": "Drivers",
+    "documents": "Documents",
+    "odometers": "Reported Odometers",
+    "tolls": "Toll Transactions",
+    "transports": "Transport/Storage",
+    "violations": "Violations",
+    "evoucher": "eVoucher",
+    "saferoads": "SafeRoads"
+  },
+  "vehicle_summary": {
+    "title": "Vehicle Detail",
+    "account": "Account",
+    "billing_sort": "Billing Sort",
+    "vin": "VIN",
+    "ymm": "Year / Make / Model",
+    "year": "Year",
+    "make": "Make",
+    "model": "Model",
+    "ext_color": "Exterior Color",
+    "center": "Center",
+    "center_description": "Center Description",
+    "client_vehicle": "Client Vehicle",
+    "status": "Status",
+    "classification": "Category",
+    "customer_use_1": "Customer Use 1",
+    "customer_use_2": "Customer Use 2",
+    "customer_use_3": "Customer Use 3",
+    "customer_use_4": "Customer Use 4",
+    "customer_use_5": "Customer Use 5"
+  },
+  "driver_summary": {
+    "title": "Driver Detail",
+    "driver_id": "Driver ID",
+    "last_name": "Last Name",
+    "first_name": "First Name",
+    "address_1": "Address 1",
+    "address_2": "Address 2",
+    "city": "City",
+    "region": "State",
+    "postal": "ZIP",
+    "city_region_postal": "City, State, ZIP",
+    "phone": "Phone",
+    "fax": "Fax",
+    "cell": "Cell",
+    "county": "County",
+    "email": "Email",
+    "misc_1": "Misc 1",
+    "misc_2": "Misc 2",
+    "misc_3": "Misc 3",
+    "misc_4": "Misc 4"
+  },
+  "fuel_history": {
+    "title": "Fuel Purchases",
+    "date": "Date",
+    "odometer": "Odometer",
+    "driver": "Driver",
+    "merchant_address": "Merchant Address",
+    "type": "Type",
+    "quantity": "Quantity",
+    "unit_cost": "Unit Cost",
+    "amount": "Amount"
+  },
+  "maintenance_history": {
+    "title": "Recent Maintenance",
+    "date": "Date",
+    "odometer": "Odometer",
+    "vendor": "Vendor",
+    "in_network": "In Network",
+    "service": "Service",
+    "quantity": "Quantity",
+    "amount": "Amount"
+  },
+  "toll_history": {
+    "title": "Toll History",
+    "date_time": "Date / Time",
+    "description": "Description",
+    "location": "Location",
+    "amount": "Amount"
+  },
+  "billing_history": {
+    "title": "Billing History",
+    "bill_date": "Bill Date",
+    "description": "Description",
+    "amount": "Amount",
+    "details": "Details",
+    "voucher": "Voucher",
+    "voucher_date": "Voucher Date"
+  },
+  "licensing_history": {
+    "title": "Licensing History",
+    "exp_date": "Exp Date",
+    "status": "Status",
+    "details": "Details",
+    "details_title": "Licensing Details",
+    "needs": "Needs",
+    "needs_title": "Licensing Needs",
+    "date": "Date",
+    "description": "Description"
+  },
+  "violation_history": {
+    "title": "Violation History",
+    "date": "Date",
+    "paid_date": "Paid",
+    "type": "Type",
+    "amount": "Amount",
+    "details": "Details"
+  },
+  "inspection_history": {
+    "title": "Inspection History",
+    "date": "Date",
+    "comments": "Comments",
+    "report": "Report"
+  }
+}

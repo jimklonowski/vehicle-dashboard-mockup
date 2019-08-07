@@ -1,8 +1,8 @@
 @import "vehicle-dashboard/dashboard-sections";
 @import "vehicle-dashboard/description-list";
 
-#VehicleDashboardSearch {
-  @extend .jumbotron, .display-4, .h1;
+#VehicleDashboardHeader {
+  @extend .jumbotron, .display-4;
   background-image: url(../assets/images/whitebg.jpg);
   background-size: cover;
   background-position: center;

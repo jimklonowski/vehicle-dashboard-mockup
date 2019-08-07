@@ -5,6 +5,7 @@ dl.dashboard-list {
   dd {
     @extend .col-6;
     margin-bottom: 0;
+    white-space: nowrap;
   }
 
   dt {

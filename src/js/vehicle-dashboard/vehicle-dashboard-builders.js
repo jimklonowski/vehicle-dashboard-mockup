@@ -2,13 +2,13 @@ import { fail } from "assert";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { CountUp } from "countup.js";
-
 import { createError, createGoogleMap, createTile } from "../util/util";
 
 /**
  * Set DataTables defaults for history tables
  */
 export function setDataTablesDefaults() {
+  // $.
   // Prevent DataTables from showing an alert when ajax error occurs
   $.fn.dataTable.ext.errMode = "none";
   // Number of pagination buttons
@@ -34,7 +34,10 @@ export function setDataTablesDefaults() {
     order: [[0, "desc"]],
     processing: true,
     language: {
+      emptyTable: "No rows found",
       processing:
+        '<i class="fas fa-spinner fa-spin fa-fw"></i><span class="sr-only">Loading...</span>',
+      loadingRecords:
         '<i class="fas fa-spinner fa-spin fa-fw"></i><span class="sr-only">Loading...</span>',
       paginate: {
         previous: "&laquo;",
@@ -57,14 +60,17 @@ export function setDataTablesDefaults() {
  */
 export function createVehicleDashboardSearch(vehicleNumber) {
   vehicleNumber = vehicleNumber || "";
+
   let search = $(
     `<form class="mb-4">
       <input type="hidden" name="command" value="VehicleDash">
-      <label class="col-form-label col-form-label-sm">Vehicle Number</label>
-      <input type="search" name="vehicle" id="vehicle" class="form-control form-control-sm col-lg-6" placeholder="Search..." value="${vehicleNumber}">
+      <label class="col-form-label col-form-label-sm" data-i18n="vehicle_dashboard.vehicle_number">Vehicle Number</label>
+      <input type="search" name="vehicle" id="vehicle" class="form-control form-control-sm col-lg-6" data-i18n="[placeholder]vehicle_dashboard.search" value="${vehicleNumber}">
     </form>`
   );
-  $("#VehicleDashboardSearch").append(search);
+  $("#VehicleDashboardSearch").html(search, () =>
+    $("#VehicleDashboardSearch").localize()
+  );
 }
 
 /**
@@ -75,6 +81,7 @@ export function createVehicleDashboardSearch(vehicleNumber) {
 export function createVehicleDetailPanel(vehicleNumber) {
   let endpoint = `services?command=VehicleDash.ajax.vehicleDetails&vehicle=${vehicleNumber}`;
   let $panel = $("#VehicleSummary");
+  let namespace = "vehicle_summary";
 
   $.getJSON(endpoint)
     .done(response => {
@@ -87,9 +94,8 @@ export function createVehicleDetailPanel(vehicleNumber) {
 
       // Each key in the returned json should align with a data-field attribute in the html template
       for (const [key, value] of Object.entries(vehicle)) {
-        $panel.find(`[data-field='${key}']`).text(value);
+        $panel.find(`[data-field='${namespace}.${key}']`).text(value);
       }
-      // $panel.find("[data-field='customer_number']").text(vehicle.customer_number);
     })
     .fail(response => {
       console.error("Error in createVehicleDetailPanel");
@@ -110,6 +116,7 @@ export function createVehicleDetailPanel(vehicleNumber) {
 export function createDriverDetailPanel(vehicleNumber) {
   let endpoint = `services?command=VehicleDash.ajax.driverDetails&vehicle=${vehicleNumber}`;
   let $panel = $("#DriverSummary");
+  let namespace = "driver_summary";
 
   $.getJSON(endpoint)
     .done(response => {
@@ -122,7 +129,7 @@ export function createDriverDetailPanel(vehicleNumber) {
 
       // Each key in json should match a data-field attribute in the html template
       for (const [key, value] of Object.entries(driver)) {
-        $panel.find(`[data-field='${key}']`).text(value);
+        $panel.find(`[data-field='${namespace}.${key}']`).text(value);
       }
     })
     .fail(response => {
@@ -150,10 +157,12 @@ export function createFuelHistoryTable(vehicleNumber) {
       url: endpoint,
       dataSrc: json => (json.data === null ? [] : json.data)
     },
+    autoWidth: false,
     columns: [
       {
         data: "date",
         type: "date",
+        width: "10%",
         render: data => {
           if (data) {
             let date = moment(data, "MM/DD/YYYY");
@@ -162,19 +171,22 @@ export function createFuelHistoryTable(vehicleNumber) {
           return "";
         }
       },
-      { data: "odometer" },
-      { data: "driver" },
+      { data: "odometer", width: "10%" },
+      { data: "driver", width: "20%" },
       {
         data: "merchant_address",
         className: "map-link",
+        width: "20%",
         render: data =>
           //prettier-ignore
-          `<button type='button' class='btn btn-sm text-decoration-none btn-link' data-title="${data}" data-url='https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(data)}&key=${process.env.GOOGLE_MAPS_API_KEY}'>
-            ${data}&nbsp;<i class="fas fa-fw fa-map-marker-alt"></i>
+          `<button type='button' class='btn btn-sm text-decoration-none btn-link text-primary' data-title="${data}" data-url='https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(data)}&key=${process.env.GOOGLE_MAPS_API_KEY}'>
+            <i class="fas fa-fw fa-map-marker-alt text-info"></i>&nbsp;
+            ${data}
           </button>`
       },
       {
         data: "type",
+        width: "10%",
         render: data => {
           let type = data.toLowerCase();
           let colorClass = "";
@@ -192,9 +204,9 @@ export function createFuelHistoryTable(vehicleNumber) {
           return `<span class="badge ${colorClass} text-light">${data}</span>`;
         }
       },
-      { data: "quantity" },
-      { data: "unit_cost" },
-      { data: "amount" }
+      { data: "quantity", width: "10%" },
+      { data: "unit_cost", width: "10%" },
+      { data: "amount", width: "10%" }
     ],
     initComplete: (settings, json) => {
       $table.on("click", "td.map-link > button", event => {
@@ -215,18 +227,54 @@ export function createFuelHistoryTable(vehicleNumber) {
  */
 export function createMaintenanceHistoryTable(vehicleNumber) {
   let endpoint = `services?command=VehicleDash.ajax.maintenanceHistory&vehicle=${vehicleNumber}`;
-  let $table = $("#MaintenanceHistory");
+  /** @type {DataTables.Api} */
+  let table;
+  let $tableElem = $("#MaintenanceHistory");
+
+  // Click to show maintenance group details
+  let showDetails = function(data) {
+    let $details = $("<table style=''>");
+    $.each(data.maintenance_items, function(index, row) {
+      let $tr = $("<tr>");
+
+      //spacer, service, quantity, amount, spacer
+      $tr.append(`<td style="width:50%;" colspan="4"></td>`);
+      //prettier-ignore
+      $tr.append(`<td style="width:20%;font-style:italic;">${row["service"]}</td>`);
+      $tr.append(`<td style="width:10%;">${row["quantity"]}</td>`);
+      $tr.append(`<td style="width:15%;">${row["amount"]}</td>`);
+      $tr.append(`<td style="width:5%;"></td>`);
+
+      $details.append($tr);
+    });
+    $details.append(
+      $(`<tr>
+          <td style="width:10%;"></td>
+          <td style="width:10%;"></td>
+          <td style="width:20%;"></td>
+          <td style="width:10%;"></td>
+          <th style="width:20%;border-top:2px solid;">Total:</th>
+          <th style="width:10%;border-top:2px solid;"></th>
+          <th style="width:15%;border-top:2px solid;">${data.total_amount}</th>
+          <td style="width:5%;"></td>
+        </tr>`)
+    );
+    return $details[0].outerHTML;
+  };
 
   // Define DataTable options
+  /** @type {DataTables.Settings} */
   const options = {
     ajax: {
       url: endpoint,
       dataSrc: json => (json.data === null ? [] : json.data)
     },
+    autoWidth: false,
     columns: [
       {
         data: "date",
         type: "date",
+        width: "10%",
         render: data => {
           if (data) {
             let date = moment(data, "MM/DD/YYYY");
@@ -235,21 +283,49 @@ export function createMaintenanceHistoryTable(vehicleNumber) {
           return "";
         }
       },
-      { data: "odometer" },
-      { data: "vendor" },
+      { data: "odometer", width: "10%" },
+      { data: "vendor", width: "20%" },
       {
         data: "in_network",
+        width: "10%",
         //prettier-ignore
         render: data => `<i class='fas ${data ? "fa-check-circle text-success" : "fa-times-circle text-danger"}'></i>`
       },
-      { data: "service" },
-      { data: "quantity" },
-      { data: "amount" }
-    ]
+      { data: "service", width: "20%", className: "font-italic" },
+      { data: "quantity", width: "10%" },
+      { data: "total_amount", width: "15%" },
+      {
+        data: null,
+        orderable: false,
+        className: "details-control",
+        defaultContent: "<i class='fas fa-fw fa-plus text-primary'></i>",
+        width: "5%"
+      }
+    ],
+    initComplete: (settings, json) => {
+      $tableElem.on("click", "tr td.details-control", function() {
+        let $icon = $(this).find("[data-icon]");
+        let $tr = $(this).closest("tr");
+        let $row = table.row($tr);
+
+        if ($row.child.isShown()) {
+          // this row is already open - close it
+          $row.child.hide();
+          $tr.removeClass("shown");
+          $icon.attr("data-icon", "plus");
+        } else {
+          // Open this row
+          $row.child(showDetails($row.data()), "p-0").show();
+          $tr.addClass("shown");
+          $icon.attr("data-icon", "minus");
+        }
+        console.log("clicked expand, data: ");
+      });
+    }
   };
 
   // Initialize the DataTable
-  $table.DataTable(options);
+  table = $tableElem.DataTable(options);
 }
 
 /**
@@ -268,7 +344,7 @@ export function createTollHistoryTable(vehicleNumber) {
     },
     columns: [
       {
-        data: "date",
+        data: "date_time",
         type: "date",
         render: data => {
           if (data) {
@@ -285,11 +361,14 @@ export function createTollHistoryTable(vehicleNumber) {
       {
         data: "description",
         className: "map-link",
+        //prettier-ignore
         render: data => {
           let parts = data.split(":");
           let location = parts[parts.length - 1].trim();
-          //prettier-ignore
-          return `<button type="button" class="btn btn-sm text-decoration-none btn-link" data-title="${location}" data-url='https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(location)}&key=${process.env.GOOGLE_MAPS_API_KEY}'>${location} <i class="fas fa-fw fa-map-marker-alt"></i></button>`;
+          return `<button type="button" class="btn btn-sm text-decoration-none btn-link text-primary" data-title="${location}" data-url='https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(location)}&key=${process.env.GOOGLE_MAPS_API_KEY}'>
+            <i class="fas fa-fw fa-map-marker-alt text-info"></i>&nbsp;
+            ${location}
+          </button>`;
         }
       },
       { data: "amount" }
@@ -343,7 +422,7 @@ export function createBillingHistoryTable(vehicleNumber) {
         data: "type",
         //prettier-ignore
         render: data => {
-          return `<span class="badge ${data.toLowerCase().indexOf("rental") !== -1 ? "badge-info" : "badge-primary"} text-light">${data.toUpperCase().replace("BILLING", "").trim()}</span>`
+          return `<span class="badge ${data.toLowerCase().indexOf("rental") !== -1 ? "badge-secondary" : "badge-primary"} text-light">${data.toUpperCase().replace("BILLING", "").trim()}</span>`
         }
       },
       { data: "amount" },
@@ -351,11 +430,20 @@ export function createBillingHistoryTable(vehicleNumber) {
         data: null,
         render: (data, type, row, meta) =>
           //prettier-ignore
-          `<button type="button" class="btn btn-sm btn-link text-decoration-none" data-type-desc="${row["type"]}" data-bill-date="${row["bill_date"]}" data-bill-for-date="${row["bill_for_date"]}" data-center="${row["center"]}" data-invoice="${row["invoice"]}">
-            View <i class="fas fa-fw fa-file-invoice-dollar"></i>
+          `<button type="button" class="btn btn-sm btn-link text-decoration-none text-primary" data-type-desc="${row["type"]}" data-bill-date="${row["bill_date"]}" data-bill-for-date="${row["bill_for_date"]}" data-center="${row["center"]}" data-invoice="${row["invoice"]}">
+            <span data-i18n="common:view"></span>&nbsp;
+            <i class="fas fa-fw fa-file-invoice-dollar"></i>
           </button>`
       }
     ],
+    drawCallback: () => {
+      // smaller pager
+      $("ul.pagination").addClass("pagination-sm");
+      // only call localization if the i18n library is ready
+      if (window.$.i18n) {
+        $table.localize();
+      }
+    },
     initComplete: (settings, json) => createBillingDetailsPopups(vehicleNumber)
   };
 
@@ -385,11 +473,11 @@ function createBillingDetailsPopups(vehicleNumber) {
       `<table id="BillingDetails" class="table">
         <thead>
           <tr>
-            <th>Bill Date</th>
-            <th>Voucher</th>
-            <th>Voucher Date</th>
-            <th>Description</th>
-            <th>Amount</th>
+            <th data-i18n="billing_history.bill_date"></th>
+            <th data-i18n="billing_history.voucher"></th>
+            <th data-i18n="billing_history.voucher_date"></th>
+            <th data-i18n="billing_history.description"></th>
+            <th data-i18n="billing_history.amount"></th>
           </tr>
         </thead>
         <tbody>
@@ -397,14 +485,16 @@ function createBillingDetailsPopups(vehicleNumber) {
         <tfoot>
           <tr>
             <th colspan="3"></th>
-            <th style="text-align:center;">Invoice Total: </th>
-            <th></th>
+            <th style="border-top:2px solid;">Invoice Total: </th>
+            <th style="border-top:2px solid;"></th>
           </tr>
         </tfoot>
       </table>`,
       width: 900,
       type: "info",
       buttonsStyling: false,
+      // localize the column headers
+      onOpen: () => $('.swal2-show').localize(),
       customClass: {
         confirmButton: "btn btn-block btn-primary",
         content: "swal-datatable"
@@ -483,7 +573,7 @@ export function createLicensingHistoryTable(vehicleNumber) {
     pageLength: 5,
     columns: [
       {
-        data: "expiration_date",
+        data: "exp_date",
         type: "date",
         render: data => {
           if (data) {
@@ -496,14 +586,15 @@ export function createLicensingHistoryTable(vehicleNumber) {
       {
         data: "status",
         //prettier-ignore
-        render: data => `<span class="badge ${data.toLowerCase().indexOf("completed") !== -1 ? "badge-success" : "badge-info"} text-light">${data.toUpperCase()}</span>`
+        render: data => `<span class="badge ${data.toLowerCase().indexOf("completed") !== -1 ? "badge-success" : "badge-secondary"} text-light">${data.toUpperCase()}</span>`
       },
       {
         data: null,
         render: (data, type, row, meta) =>
           //prettier-ignore
-          `<button type='button' class='btn btn-sm btn-link text-decoration-none' data-licensing-details-period="${row["period"]}">
-            View <i class="fas fa-fw fa-file-invoice-dollar"></i>
+          `<button type='button' class='btn btn-sm btn-link text-decoration-none text-primary' data-licensing-details-period="${row["period"]}">
+            <span data-i18n="common:view"></span>&nbsp;
+            <i class="fas fa-fw fa-file-invoice-dollar"></i>
           </button>`
       },
       {
@@ -511,12 +602,21 @@ export function createLicensingHistoryTable(vehicleNumber) {
         render: (data, type, row, meta) =>
           //prettier-ignore
           row["status"].toLowerCase().indexOf("completed") == -1 
-          ? `<button type="button" class="btn btn-sm btn-link text-decoration-none" data-needs="${row["status"]}" data-licensing-needs-period="${row["period"]}" >
-            View&nbsp;<i class='fas fa-fw fa-exclamation-triangle'></i>
+          ? `<button type="button" class="btn btn-sm btn-link text-decoration-none text-warning" data-needs="${row["status"]}" data-licensing-needs-period="${row["period"]}" >
+            <span data-i18n="common:view"></span>&nbsp;
+            <i class='fas fa-fw fa-exclamation-triangle'></i>
           </button>` 
           : ""
       }
     ],
+    drawCallback: () => {
+      // smaller pager
+      $("ul.pagination").addClass("pagination-sm");
+      // only call localization if the i18n library is ready
+      if (window.$.i18n) {
+        $table.localize();
+      }
+    },
     initComplete: (settings, json) => createLicensingPopups(vehicleNumber)
   };
 
@@ -548,11 +648,18 @@ function createLicensingDetailsPopup(vehicleNumber) {
       title: `Licensing History Details`,
       html: 
       `<table id="LicensingHistoryDetails" class="table">
-        <thead></thead>
+        <thead>
+          <tr>
+            <th data-i18n="licensing_history.date"></th>
+            <th data-i18n="licensing_history.description"></th>
+          </tr>
+        </thead>
         <tbody></tbody>
       </table>`,
       width: 900,
       type: "info",
+      // localize the column headers
+      onOpen: () => $('.swal2-show').localize(),
       buttonsStyling: false,
       customClass: {
         confirmButton: "btn btn-block btn-primary",
@@ -604,15 +711,17 @@ function createLicensingNeedsPopup(vehicleNumber) {
       `<table id="LicensingHistoryNeeds" class="table">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Status</th>
+            <th data-i18n="licensing_history.date"></th>
+            <th data-i18n="licensing_history.description"></th>
+            <th data-i18n="licensing_history.status"></th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>`,
       width: 900,
       type: "info",
+      // localize the column headers
+      onOpen: () => $('.swal2-show').localize(),
       buttonsStyling: false,
       customClass: {
         confirmButton: "btn btn-block btn-primary",
@@ -701,11 +810,20 @@ export function createViolationHistoryTable(vehicleNumber) {
         data: "number",
         render: data =>
           //prettier-ignore
-          `<button type="button" class="btn btn-sm btn-link text-decoration-none" data-violation="${data}" >
-            View&nbsp;<i class='fas fa-fw fa-exclamation-triangle'></i>
+          `<button type="button" class="btn btn-sm btn-link text-decoration-none text-primary" data-violation="${data}" >
+            <span data-i18n="common:view"></span>&nbsp;
+            <i class='fas fa-fw fa-exclamation-triangle'></i>
           </button>`
       }
     ],
+    drawCallback: () => {
+      // smaller pager
+      $("ul.pagination").addClass("pagination-sm");
+      // only call localization if the i18n library is ready
+      if (window.$.i18n) {
+        $table.localize();
+      }
+    },
     initComplete: (settings, json) => createViolationPopups(vehicleNumber)
   };
 
@@ -785,11 +903,20 @@ export function createInspectionHistoryTable(vehicleNumber) {
         data: null,
         render: (data, type, row, meta) =>
           //prettier-ignore
-          `<button type='button' class='btn btn-sm btn-link text-decoration-none' data-inspection="${row["id"]}">
-            View <i class="fas fa-fw fa-camera"></i>
+          `<button type='button' class='btn btn-sm btn-link text-decoration-none text-primary' data-inspection="${row["id"]}">
+            <span data-i18n="common:view"></span>&nbsp;
+            <i class="fas fa-fw fa-camera"></i>
           </button>`
       }
     ],
+    drawCallback: () => {
+      // smaller pager
+      $("ul.pagination").addClass("pagination-sm");
+      // only call localization if the i18n library is ready
+      if (window.$.i18n) {
+        $table.localize();
+      }
+    },
     initComplete: (settings, json) => createInspectionPopups(vehicleNumber)
   };
 
@@ -905,6 +1032,9 @@ export function createFuelTiles(vehicleNumber) {
     });
 }
 
+/**
+ * Apply counter animations based on data-attributes
+ */
 function animateTile(tile) {
   let target = $(tile).find(".countmeup")[0];
   let options = {};

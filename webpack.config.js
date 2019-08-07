@@ -96,12 +96,12 @@ module.exports = (env, argv) => {
         systemvars: true
       }),
       new CleanWebpackPlugin(),
-      // new CopyWebpackPlugin([
-      //   {
-      //     from: path.resolve(__dirname, "src/assets/json/"),
-      //     to: path.resolve(__dirname, "dist/assets/json/")
-      //   }
-      // ]),
+      new CopyWebpackPlugin([
+        {
+          from: path.resolve(__dirname, "src/assets/locales/"),
+          to: path.resolve(__dirname, "dist/assets/locales/")
+        }
+      ]),
       //new webpack.SourceMapDevToolPlugin(),
       new webpack.ProvidePlugin({
         $: "jquery",
